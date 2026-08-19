@@ -300,10 +300,12 @@ Microsoft SC-200), tryb "Wolne zapytania" (sandbox) bez przypisanego
 ćwiczenia.
 
 Przetestowane automatycznie (`tests/test_app/`, FastAPI `TestClient`, 313
-testów w całym repo) oraz ręcznie przez `curl` na realnie odpalonym
-serwerze. Interfejs w prawdziwej przeglądarce testował wyłącznie człowiek
-nadzorujący projekt - jeśli coś w UI wygląda nie tak, zgłoś to jako feedback
-do kolejnej iteracji.
+testów w całym repo), ręcznie przez `curl` na realnie odpalonym serwerze
+(asystent AI nie ma dostępu do przeglądarki), oraz na bieżąco w prawdziwej
+przeglądarce przez człowieka nadzorującego projekt - każda nowa funkcja była
+klikana i sprawdzana od razu po zaimplementowaniu, a zgłoszone poprawki
+(wyrównanie elementów w sidebarze, szerokość panelu, kolejność badge'y) trafiały
+z powrotem do kolejnej iteracji tego samego dnia.
 
 ## Nazewnictwo w UI vs. w kodzie (celowa niespójność)
 
