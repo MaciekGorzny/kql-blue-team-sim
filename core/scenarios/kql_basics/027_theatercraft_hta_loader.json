@@ -1,0 +1,22 @@
+{
+  "id": "027_theatercraft_hta_loader",
+  "title": "Reklama prowadzi do fałszywej reCAPTCHA i loadera HTA",
+  "prompt": "Złośliwa reklama skierowała użytkownika na stronę z fałszywą reCAPTCHA (znów technika ClickFix), a wcześniejsze próby dostarczenia zwykłego .exe zostały zablokowane przez Defendera - operatorzy przerzucili się więc na archiwum 7z z loaderem HTA. W DeviceProcessEvents znajdź uruchomienie mshta.exe z plikiem 'cheatsheet.hta'. Zwróć DeviceName, AccountName, ProcessCommandLine i InitiatingProcessFileName.",
+  "datasets": [
+    "DeviceProcessEvents"
+  ],
+  "difficulty": "beginner",
+  "mitre_techniques": [
+    "T1218.005",
+    "T1204.004",
+    "T1027"
+  ],
+  "hint": "`FileName == 'mshta.exe' and ProcessCommandLine contains 'cheatsheet.hta'` - kropka w nazwie pliku wymaga `contains`, nie `has`.",
+  "source_url": "https://maciekgorzny.github.io/security-writeups/threat-003.html",
+  "sc200_area": "Microsoft Defender for Endpoint (MDE)",
+  "validation": {
+    "result_match": {
+      "reference_query": "DeviceProcessEvents | where FileName == 'mshta.exe' and ProcessCommandLine contains 'cheatsheet.hta' | project DeviceName, AccountName, ProcessCommandLine, InitiatingProcessFileName"
+    }
+  }
+}

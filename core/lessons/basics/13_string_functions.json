@@ -1,0 +1,7 @@
+{
+  "id": "string_functions",
+  "title": "funkcje tekstowe - tolower, toupper, strcat, split",
+  "description": "Poza operatorami porównania KQL ma też funkcje do przekształcania tekstu, których używa się zwykle wewnątrz `extend` lub `project`. `tolower()`/`toupper()` zmieniają wielkość liter (przydatne przy normalizacji danych z różnych źródeł przed porównaniem). `strcat()` skleja kilka wartości w jeden tekst. `split(tekst, separator)` dzieli tekst na listę fragmentów według separatora - np. do rozbicia ścieżki pliku na segmenty.",
+  "example_query": "DeviceProcessEvents | where FileName == 'powershell.exe' | take 1 | extend Upper = toupper(FileName), Full = strcat(DeviceName, ' / ', AccountName), PathParts = split(FolderPath, '\\\\') | project Upper, Full, PathParts",
+  "example_explanation": "Upper pokazuje FileName pisane wielkimi literami. Full sklejamy z nazwy urządzenia i konta w jeden opisowy tekst 'WIN-CLIENT02 / anowak'. PathParts dzieli ścieżkę folderu po znaku '\\\\' na listę segmentów (np. ['C:', 'Windows', 'System32', ...]) - taki wynik dobrze łączy się z operatorem `in` z lekcji o `dynamic()`."
+}

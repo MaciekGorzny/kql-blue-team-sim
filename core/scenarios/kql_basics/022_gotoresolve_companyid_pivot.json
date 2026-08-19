@@ -1,0 +1,28 @@
+{
+  "id": "022_gotoresolve_companyid_pivot",
+  "title": "Legalne narzędzie RMM jako ukryty backdoor",
+  "prompt": "Skrypt .vbs po cichu zainstalował legalne, podpisane cyfrowo narzędzie zdalnego dostępu GoTo Resolve w trybie Unattended - blokowanie po nazwie pliku czy domenie nic nie da, bo to zaufane oprogramowanie. Jedynym wspólnym mianownikiem całej rodziny procesów atakującego jest identyfikator jego konta GoTo (CompanyId) zaszyty w ścieżce instalacji. W DeviceProcessEvents znajdź wszystkie unikalne procesy (FileName), których ProcessCommandLine LUB FolderPath zawierają CompanyId '9910442217738851203', i zwróć liczbę wystąpień każdego z nich (jako Occurrences), posortowaną malejąco.",
+  "datasets": [
+    "DeviceProcessEvents"
+  ],
+  "difficulty": "advanced",
+  "mitre_techniques": [
+    "T1219",
+    "T1036.005",
+    "T1548.002"
+  ],
+  "hint": "`where ProcessCommandLine has '9910442217738851203' or FolderPath has '9910442217738851203'`, potem `summarize Occurrences = count() by FileName | order by Occurrences desc`.",
+  "source_url": "https://maciekgorzny.github.io/security-writeups/threat-026-flashupdater-gotoresolve.html",
+  "sc200_area": "Microsoft Defender for Endpoint (MDE)",
+  "validation": {
+    "result_match": {
+      "reference_query": "DeviceProcessEvents | where ProcessCommandLine has '9910442217738851203' or FolderPath has '9910442217738851203' | summarize Occurrences = count() by FileName | order by Occurrences desc",
+      "ordered": false
+    },
+    "required_usage": {
+      "required_operators": [
+        "SummarizeStage"
+      ]
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "id": "025_lummac2_staging_payload",
+  "title": "Infostealer LummaC2 uruchomiony z ukrytego folderu",
+  "prompt": "mshta.exe uruchomił zdalny loader, który przez PowerShell pobrał i po 30 sekundach uruchomił finalny payload w folderze podszywającym się pod dane aplikacji. W DeviceProcessEvents znajdź uruchomienie Update.exe z folderu zawierającego 'SystemCacheFiles'. Zwróć DeviceName, AccountName, FolderPath i InitiatingProcessFileName.",
+  "datasets": [
+    "DeviceProcessEvents"
+  ],
+  "difficulty": "intermediate",
+  "mitre_techniques": [
+    "T1059.001",
+    "T1555"
+  ],
+  "hint": "`FileName == 'Update.exe' and FolderPath has 'SystemCacheFiles'`, potem `project`.",
+  "source_url": "https://maciekgorzny.github.io/security-writeups/inc-7987.html",
+  "sc200_area": "Microsoft Defender for Endpoint (MDE)",
+  "validation": {
+    "result_match": {
+      "reference_query": "DeviceProcessEvents | where FileName == 'Update.exe' and FolderPath has 'SystemCacheFiles' | project DeviceName, AccountName, FolderPath, InitiatingProcessFileName"
+    }
+  }
+}

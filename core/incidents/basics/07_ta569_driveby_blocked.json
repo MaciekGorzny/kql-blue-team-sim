@@ -1,0 +1,31 @@
+{
+  "id": "07_ta569_driveby_blocked",
+  "title": "Zainfekowane sklepy internetowe: powstrzymany drive-by",
+  "summary": "Dwóch pracowników trafia (przez zwykłe wyszukiwanie) na dwa różne, skądinąd legalne polskie sklepy internetowe, zainfekowane przez znaną grupę TA569. Wstrzyknięty JavaScript próbuje przekierować do infrastruktury C2 - w obu przypadkach ochrona sieciowa zablokowała połączenie, zanim jakikolwiek payload zdążył się wykonać. Zadanie polega na potwierdzeniu zasięgu, a nie odkryciu włamania. Oparte na prawdziwym dochodzeniu INC-7936.",
+  "steps": [
+    {
+      "scenario_id": "026_ta569_driveby_c2_beacon",
+      "narrative": "Masz listę znanych adresów IP infrastruktury C2 tej grupy. Sprawdź, które urządzenia w ogóle próbowały się z nią połączyć - niezależnie od tego, czy połączenie się powiodło."
+    },
+    {
+      "kind": "action",
+      "title": "Potwierdź, że nic dalej nie uciekło",
+      "narrative": "Ochrona sieciowa zablokowała połączenie na obu urządzeniach, zanim JavaScript zdążył pobrać właściwy payload - ale to trzeba samodzielnie potwierdzić, nie założyć.",
+      "actions": [
+        "Przeszukaj DeviceProcessEvents na obu urządzeniach pod kątem nowych, nierozpoznanych procesów w oknie czasowym wokół zablokowanego połączenia.",
+        "Sprawdź w konsoli, czy alert ma status zablokowany/prevented, a nie tylko wykryty.",
+        "Wykonaj pełne skanowanie AV na obu urządzeniach dla pewności."
+      ]
+    },
+    {
+      "kind": "action",
+      "title": "Ogranicz ryzyko na przyszłość",
+      "narrative": "SEO poisoning oznacza, że kolejne osoby mogą trafić na te same (lub podobne) zainfekowane strony przez zwykłe wyszukiwanie - to nie błąd użytkownika.",
+      "actions": [
+        "Zablokuj cały znany zestaw adresów IP/domen tej infrastruktury na firewallu/proxy dla całej organizacji.",
+        "Zgłoś kompromitację zainfekowanych stron ich właścicielom/CERT.",
+        "Krótko poinformuj zespół, że zwykłe wyszukiwanie też może prowadzić na złośliwe strony - czujność nie kończy się na załącznikach e-mail."
+      ]
+    }
+  ]
+}

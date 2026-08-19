@@ -1,0 +1,21 @@
+{
+  "id": "015_rmm_spawns_downloader",
+  "title": "Narzędzie RMM uruchamia pobieranie przez PowerShell",
+  "prompt": "W DeviceProcessEvents znajdź proces powershell.exe, którego rodzicem jest narzędzie zdalnej administracji RemotePCService.exe, a linia poleceń zawiera 'DownloadString' - to nietypowe użycie legalnego narzędzia RMM do pobrania kolejnego etapu ataku. Zwróć DeviceName, AccountName, ProcessCommandLine i InitiatingProcessFileName.",
+  "datasets": [
+    "DeviceProcessEvents"
+  ],
+  "difficulty": "intermediate",
+  "mitre_techniques": [
+    "T1059.001",
+    "T1219"
+  ],
+  "hint": "`FileName == 'powershell.exe' and InitiatingProcessFileName == 'RemotePCService.exe'`, potem `ProcessCommandLine has 'DownloadString'`.",
+  "source_url": "https://maciekgorzny.github.io/security-writeups/hunt-002.html",
+  "sc200_area": "Microsoft Defender for Endpoint (MDE)",
+  "validation": {
+    "result_match": {
+      "reference_query": "DeviceProcessEvents | where FileName == 'powershell.exe' and InitiatingProcessFileName == 'RemotePCService.exe' | where ProcessCommandLine has 'DownloadString' | project DeviceName, AccountName, ProcessCommandLine, InitiatingProcessFileName"
+    }
+  }
+}

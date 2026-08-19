@@ -1,0 +1,7 @@
+{
+  "id": "distinct",
+  "title": "distinct - unikalne wartości",
+  "description": "`distinct` zwraca unikalne kombinacje wartości podanych kolumn, usuwając duplikaty. Przydatne, kiedy pytanie brzmi nie 'ile zdarzeń', tylko 'jakie WARTOŚCI w ogóle występują' - np. jakie konta logowały się w ostatnim tygodniu, niezależnie ile razy każde z nich.",
+  "example_query": "DeviceProcessEvents | distinct AccountName",
+  "example_explanation": "Zwraca listę unikalnych nazw kont, które uruchamiały jakikolwiek proces - każde konto pojawia się dokładnie raz, niezależnie od tego, ile procesów uruchomiło. Jeśli potrzebujesz też LICZBY unikalnych wartości (a nie samej listy), użyj `summarize dcount(AccountName)` zamiast `distinct`."
+}

@@ -1,0 +1,35 @@
+{
+  "id": "08_theatercraft_malvertising",
+  "title": "Malvertising → fałszywa reCAPTCHA → loader HTA",
+  "summary": "Płatna reklama kieruje użytkownika na stronę z fałszywą reCAPTCHA, która - znów przez technikę ClickFix - nakłania go do ręcznego uruchomienia polecenia. Operatorzy wcześniej próbowali dostarczyć zwykłe .exe, ale Defender je blokował, więc przerzucili się na archiwum 7z z loaderem HTA łączącym się z domeną drugiego etapu o rotujących, losowych subdomenach. Oparte na prawdziwym dochodzeniu THREAT-003.",
+  "steps": [
+    {
+      "scenario_id": "027_theatercraft_hta_loader",
+      "narrative": "Użytkownik kliknął reklamę i wykonał polecenie z fałszywej strony weryfikacji. Znajdź uruchomienie loadera HTA, które to zapoczątkowało."
+    },
+    {
+      "scenario_id": "028_theatercraft_dga_beacon",
+      "narrative": "Loader HTA łączy się z drugim etapem po domenie z rotującymi subdomenami - blokowanie jednej subdomeny nic nie da. Znajdź połączenie po domenie nadrzędnej."
+    },
+    {
+      "kind": "action",
+      "title": "Powstrzymanie",
+      "narrative": "Domena drugiego etapu zmienia subdomeny, więc blokada musi celować w domenę nadrzędną, nie pojedynczy adres.",
+      "actions": [
+        "Odizoluj urządzenie od sieci i zakończ proces mshta.exe.",
+        "Zablokuj domenę nadrzędną *.theatercraft.buzz oraz invaginate.mom na proxy/firewallu (blokada całej domeny, nie tylko jednej subdomeny).",
+        "Poddaj kwarantannie pobrane archiwum 7z i plik .hta."
+      ]
+    },
+    {
+      "kind": "action",
+      "title": "Sprawdź, dlaczego wcześniejsze ostrzeżenia nie wystarczyły",
+      "narrative": "To nie pierwsza próba tego samego atakującego na tym koncie - wcześniejsze próby dostarczenia zwykłego .exe zostały zablokowane, więc zmienili taktykę na archiwum + HTA. Warto sprawdzić, czy obrona nadąża za taką zmianą.",
+      "actions": [
+        "Sprawdź, czy reguły ASR (Attack Surface Reduction) blokują uruchamianie mshta.exe dla zwykłych użytkowników.",
+        "Poszukaj wcześniejszych, zablokowanych prób pobrania .exe na tym samym urządzeniu/koncie - potwierdzą one, że to ta sama, kontynuowana kampania.",
+        "Rozważ blokadę pobierania archiwów 7z/RAR z nieznanych domen na poziomie proxy."
+      ]
+    }
+  ]
+}

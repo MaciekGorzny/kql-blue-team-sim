@@ -1,0 +1,26 @@
+{
+  "id": "005_count_events_per_device",
+  "title": "Liczba zdarzeń na urządzenie",
+  "prompt": "Ile zdarzeń utworzenia procesu zarejestrowano na każdym urządzeniu? Użyj `summarize count() by DeviceName` - to podstawowa technika inwentaryzacji przed dalszym polowaniem.",
+  "datasets": [
+    "DeviceProcessEvents"
+  ],
+  "difficulty": "intermediate",
+  "mitre_techniques": [],
+  "hint": "`summarize count() by DeviceName` - nie trzeba nadawać nazwy kolumnie agregującej, domyślna to 'Count'.",
+  "sc200_area": "Microsoft Defender for Endpoint (MDE)",
+  "validation": {
+    "result_match": {
+      "reference_query": "DeviceProcessEvents | summarize count() by DeviceName",
+      "ordered": false
+    },
+    "required_usage": {
+      "required_operators": [
+        "SummarizeStage"
+      ],
+      "required_columns": [
+        "DeviceName"
+      ]
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "id": "028_theatercraft_dga_beacon",
+  "title": "Rotujące subdomeny w stylu DGA jako C2",
+  "prompt": "Uruchomiony loader HTA łączy się z domeną drugiego etapu, która używa losowych, szesnastkowych subdomen (styl DGA) pod jedną domeną nadrzędną - blokowanie pojedynczego adresu IP czy subdomeny nic nie da. W DeviceNetworkEvents znajdź połączenie, którego RemoteUrl kończy się na 'theatercraft.buzz'. Zwróć DeviceName, RemoteUrl i InitiatingProcessFileName.",
+  "datasets": [
+    "DeviceNetworkEvents"
+  ],
+  "difficulty": "beginner",
+  "mitre_techniques": [
+    "T1071.001",
+    "T1568"
+  ],
+  "hint": "`where RemoteUrl endswith 'theatercraft.buzz'` - `endswith` dopasuje każdą subdomenę tej domeny nadrzędnej, niezależnie od losowego prefiksu.",
+  "source_url": "https://maciekgorzny.github.io/security-writeups/threat-003.html",
+  "sc200_area": "Microsoft Defender for Endpoint (MDE)",
+  "validation": {
+    "result_match": {
+      "reference_query": "DeviceNetworkEvents | where RemoteUrl endswith 'theatercraft.buzz' | project DeviceName, RemoteUrl, InitiatingProcessFileName"
+    }
+  }
+}

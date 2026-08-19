@@ -1,0 +1,21 @@
+{
+  "id": "023_clickfix_blocked_powershell",
+  "title": "Próba ClickFix zablokowana przez Defendera",
+  "prompt": "Defender zgłosił zablokowanie podejrzanego polecenia PowerShell, zanim doszło do pobrania kolejnych etapów ataku (technika ClickFix - użytkownik ręcznie wkleja i uruchamia polecenie ze strony phishingowej). Musisz to potwierdzić. W DeviceProcessEvents znajdź uruchomienie powershell.exe z rodzica explorer.exe (typowy ślad ręcznie wklejonego polecenia z okna Uruchom), którego linia poleceń zawiera 'DownloadString'. Zwróć DeviceName, AccountName, ProcessCommandLine i InitiatingProcessFileName.",
+  "datasets": [
+    "DeviceProcessEvents"
+  ],
+  "difficulty": "intermediate",
+  "mitre_techniques": [
+    "T1204.004",
+    "T1059.001"
+  ],
+  "hint": "`FileName == 'powershell.exe' and InitiatingProcessFileName == 'explorer.exe'`, potem `ProcessCommandLine has 'DownloadString'`.",
+  "source_url": "https://maciekgorzny.github.io/security-writeups/threat-025.html",
+  "sc200_area": "Microsoft Defender for Endpoint (MDE)",
+  "validation": {
+    "result_match": {
+      "reference_query": "DeviceProcessEvents | where FileName == 'powershell.exe' and InitiatingProcessFileName == 'explorer.exe' and ProcessCommandLine has 'DownloadString' | project DeviceName, AccountName, ProcessCommandLine, InitiatingProcessFileName"
+    }
+  }
+}

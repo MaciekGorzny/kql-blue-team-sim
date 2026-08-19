@@ -1,0 +1,24 @@
+{
+  "id": "006_unique_accounts_per_device_desc",
+  "title": "Unikalne konta na urządzenie",
+  "prompt": "Dla każdego urządzenia policz liczbę unikalnych kont, które uruchamiały na nim procesy - nazwij tę kolumnę UniqueAccounts. Posortuj wynik malejąco po UniqueAccounts (to naturalny, przydatny widok do szybkiego wychwycenia hostów z nietypowo dużą liczbą różnych użytkowników).",
+  "datasets": [
+    "DeviceProcessEvents"
+  ],
+  "difficulty": "intermediate",
+  "mitre_techniques": [],
+  "hint": "`dcount()` liczy unikalne wartości. `sort by` domyślnie jest malejąco, więc nie trzeba dopisywać `desc`.",
+  "sc200_area": "Microsoft Defender for Endpoint (MDE)",
+  "validation": {
+    "result_match": {
+      "reference_query": "DeviceProcessEvents | summarize UniqueAccounts = dcount(AccountName) by DeviceName | sort by UniqueAccounts",
+      "ordered": false
+    },
+    "required_usage": {
+      "required_operators": [
+        "SummarizeStage",
+        "SortStage"
+      ]
+    }
+  }
+}

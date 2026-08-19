@@ -1,0 +1,7 @@
+{
+  "id": "take",
+  "title": "take / limit - ograniczanie liczby wierszy",
+  "description": "`take` (synonim: `limit`) zwraca tylko pierwsze N wierszy wyniku - bez żadnej gwarancji, KTÓRE konkretnie wiersze to będą, jeśli wcześniej nie posortowałeś danych. Używa się go głównie do szybkiego 'zerknięcia' na kształt danych (jakie kolumny, jakie typowe wartości), zanim napiszesz właściwe zapytanie.",
+  "example_query": "DeviceProcessEvents | take 5",
+  "example_explanation": "Zwraca pierwsze 5 wierszy tabeli DeviceProcessEvents, bez żadnego filtrowania - dobry pierwszy krok, kiedy widzisz nową tabelę i chcesz zobaczyć jakie ma kolumny i jak wyglądają typowe wartości, zanim zaczniesz pisać `where`."
+}

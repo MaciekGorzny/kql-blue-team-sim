@@ -1,0 +1,7 @@
+{
+  "id": "string_ops",
+  "title": "operatory tekstowe - contains, has, endswith, startswith",
+  "description": "KQL ma kilka operatorów do porównywania tekstu i każdy z nich znaczy co innego. `==` wymaga dokładnej zgodności całego pola. `contains` szuka dowolnego fragmentu (podciągu) w środku tekstu - działa zawsze, ale jest wolniejszy na dużych wolumenach. `has` dopasowuje wyłącznie CAŁE tokeny złożone z liter/cyfr (rozdzielone spacjami, ukośnikami, myślnikami itd.) - jest szybszy, ale nigdy nie dopasuje fragmentu zawierającego znak niealfanumeryczny, np. `has '-enc'` nigdy nie zadziała. `startswith`/`endswith` sprawdzają początek/koniec tekstu - przydatne np. do rozszerzeń plików.",
+  "example_query": "DeviceProcessEvents | where FileName endswith '.exe' and ProcessCommandLine has 'hidden' | project DeviceName, FileName | take 5",
+  "example_explanation": "Szukamy plików wykonywalnych (`endswith '.exe'`), których linia poleceń zawiera całe słowo 'hidden' (typowy fragment `-WindowStyle Hidden` w PowerShellu). `has 'hidden'` działa tu poprawnie, bo 'hidden' to pojedynczy alfanumeryczny token - gdybyśmy szukali np. '-w hidden' albo fragmentu z myślnikiem, musielibyśmy użyć `contains` zamiast `has` (patrz lekcja o `extend`)."
+}

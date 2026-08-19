@@ -1,0 +1,20 @@
+{
+  "id": "018_ping_delay_self_delete",
+  "title": "Samousuwanie przez opóźnienie ping",
+  "prompt": "Klasyczna technika anti-forensics: malware używa 'ping 127.0.0.1' jako prostego opóźnienia, po czym usuwa samo siebie poleceniem 'del /F /Q'. W DeviceProcessEvents znajdź takie uruchomienie cmd.exe. Zwróć DeviceName, AccountName, ProcessCommandLine i InitiatingProcessFileName.",
+  "datasets": [
+    "DeviceProcessEvents"
+  ],
+  "difficulty": "intermediate",
+  "mitre_techniques": [
+    "T1070.004"
+  ],
+  "hint": "`FileName == 'cmd.exe'`, `ProcessCommandLine has 'ping' and ProcessCommandLine contains '127.0.0.1'`, `ProcessCommandLine has 'del'`, `ProcessCommandLine contains '/F' and ProcessCommandLine contains '/Q'` - '127.0.0.1', '/F' i '/Q' zawierają znaki niealfanumeryczne, więc potrzebują `contains`, nie `has`.",
+  "source_url": "https://maciekgorzny.github.io/security-writeups/hunt-002.html",
+  "sc200_area": "Microsoft Defender for Endpoint (MDE)",
+  "validation": {
+    "result_match": {
+      "reference_query": "DeviceProcessEvents | where FileName == 'cmd.exe' | where ProcessCommandLine has 'ping' and ProcessCommandLine contains '127.0.0.1' | where ProcessCommandLine has 'del' | where ProcessCommandLine contains '/F' and ProcessCommandLine contains '/Q' | project DeviceName, AccountName, ProcessCommandLine, InitiatingProcessFileName"
+    }
+  }
+}

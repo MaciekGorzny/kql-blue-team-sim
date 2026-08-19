@@ -1,0 +1,35 @@
+{
+  "id": "03_gotoresolve_rmm_abuse",
+  "title": "Fałszywy Adobe Flash instaluje legalne RMM jako backdoor",
+  "summary": "Użytkownik klika link phishingowy udający aktualizację Adobe Flash. Zamiast klasycznego malware, VBScript po cichu instaluje legalne, cyfrowo podpisane narzędzie zdalnego dostępu (GoTo Resolve) zarejestrowane na konto atakującego - blokowanie po nazwie pliku czy domenie nie działa, bo to zaufane oprogramowanie. Oparte na prawdziwym dochodzeniu THREAT-026.",
+  "steps": [
+    {
+      "scenario_id": "021_gotoresolve_vbs_dropper",
+      "narrative": "Użytkownik zgłosił, że pobrał \"aktualizację Adobe Flash\" i coś mu się zainstalowało w tle. Zacznij od znalezienia skryptu, który to uruchomił."
+    },
+    {
+      "scenario_id": "022_gotoresolve_companyid_pivot",
+      "narrative": "Skrypt zainstalował legalne narzędzie RMM - nie da się go zablokować po nazwie ani sygnaturze. Znajdź jedyny wspólny mianownik całej rodziny procesów atakującego: identyfikator jego konta."
+    },
+    {
+      "kind": "action",
+      "title": "Powstrzymanie: odetnij dostęp przez legalne narzędzie",
+      "narrative": "To nie jest malware, którego usunięcie wystarczy - to ważna, zarejestrowana sesja RMM na koncie atakującego. Samo usunięcie plików nie odbierze mu dostępu.",
+      "actions": [
+        "Odizoluj zainfekowane urządzenie od sieci, zanim atakujący zauważy reakcję.",
+        "Skontaktuj się z dostawcą RMM (GoTo) i poproś o dezaktywację/zablokowanie konkretnego CompanyId - to jedyny sposób na trwałe odcięcie dostępu.",
+        "Odinstaluj agenta GoTo Resolve Unattended z zainfekowanej maszyny."
+      ]
+    },
+    {
+      "kind": "action",
+      "title": "Poluj na to samo CompanyId w całym środowisku",
+      "narrative": "Jeśli ten sam e-mail phishingowy trafił do więcej niż jednej osoby, ten sam atakujący mógł zarejestrować to samo konto RMM na wielu urządzeniach.",
+      "actions": [
+        "Przeszukaj DeviceProcessEvents na wszystkich urządzeniach pod kątem tego samego CompanyId.",
+        "Sprawdź bramkę pocztową pod kątem tej samej kampanii (nadawca, domena strony-przynęty) i usuń pozostałe kopie wiadomości.",
+        "Zablokuj domenę dostarczającą fałszywy instalator na proxy/firewallu."
+      ]
+    }
+  ]
+}

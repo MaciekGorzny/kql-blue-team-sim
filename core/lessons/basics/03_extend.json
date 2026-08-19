@@ -1,0 +1,7 @@
+{
+  "id": "extend",
+  "title": "extend - dokładanie policzonych kolumn",
+  "description": "`extend` działa jak `project`, ale DOKŁADA nową kolumnę zamiast zawężać istniejące - reszta kolumn zostaje bez zmian. Świetne do oznaczania wierszy flagą (prawda/fałsz) na podstawie jakiegoś warunku, którą potem możesz wykorzystać w kolejnym `where` albo `summarize`.",
+  "example_query": "DeviceProcessEvents | where FileName == 'powershell.exe' | extend IsEncoded = ProcessCommandLine contains '-enc' | project DeviceName, IsEncoded",
+  "example_explanation": "Dokładamy kolumnę IsEncoded, która mówi, czy linia poleceń zawiera '-enc' (typowy znak zakodowanego base64 payloadu w PowerShellu). Uwaga na pułapkę: użyliśmy tu `contains`, nie `has` - `has` dopasowuje wyłącznie CAŁE tokeny złożone z liter/cyfr, więc `has '-enc'` (z myślnikiem na początku) nigdy by nie zadziałało. Do fragmentów zawierających znaki niealfanumeryczne (myślniki, ukośniki, kropki) zawsze używaj `contains`."
+}

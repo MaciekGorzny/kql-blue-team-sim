@@ -1,0 +1,7 @@
+{
+  "id": "count",
+  "title": "count - liczba wierszy",
+  "description": "Samodzielny operator `count` (bez nawiasów, na końcu pipeline'u) zwraca jedną liczbę: ile wierszy wpadło na koniec zapytania. To najszybszy sposób sprawdzenia 'ile takich zdarzeń w ogóle jest', bez oglądania samych wierszy. Nie myl go z `count()` UŻYTYM WEWNĄTRZ `summarize` - to jest funkcja agregująca licząca wiersze W KAŻDEJ GRUPIE, a samodzielny `count` liczy wszystkie wiersze naraz.",
+  "example_query": "DeviceProcessEvents | where FileName == 'powershell.exe' | count",
+  "example_explanation": "Zwraca jeden wiersz z kolumną Count - ile razy uruchomiono powershell.exe w całej tabeli. Gdybyś chciał tę samą liczbę osobno na każde urządzenie, użyłbyś `summarize count() by DeviceName` zamiast samego `count`."
+}

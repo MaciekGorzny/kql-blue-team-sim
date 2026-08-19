@@ -1,0 +1,20 @@
+{
+  "id": "002_encoded_powershell",
+  "title": "Zakodowany PowerShell",
+  "prompt": "Znajdź uruchomienia powershell.exe, które używają zakodowanej (base64) komendy - flaga -enc. Zwróć DeviceName, AccountName, ProcessCommandLine.",
+  "datasets": [
+    "DeviceProcessEvents"
+  ],
+  "difficulty": "beginner",
+  "mitre_techniques": [
+    "T1059.001"
+  ],
+  "hint": "Flaga '-enc' zawiera myślnik, więc `has` jej nie złapie (dopasowuje tylko całe tokeny) - użyj `contains`.",
+  "sc200_area": "Microsoft Defender for Endpoint (MDE)",
+  "validation": {
+    "result_match": {
+      "reference_query": "DeviceProcessEvents | where FileName == 'powershell.exe' and ProcessCommandLine contains '-enc' | project DeviceName, AccountName, ProcessCommandLine",
+      "ordered": false
+    }
+  }
+}

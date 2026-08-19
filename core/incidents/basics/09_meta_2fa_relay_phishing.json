@@ -1,0 +1,35 @@
+{
+  "id": "09_meta_2fa_relay_phishing",
+  "title": "Fałszywe naruszenie praw Meta z przekazywaniem 2FA na żywo",
+  "summary": "E-mail podszywający się pod dział prawny Meta grozi ograniczeniem konta firmowego na Facebooku i trafia do wspólnej skrzynki firmowej. Strona phishingowa nie tylko zbiera hasło, ale w czasie rzeczywistym przekazuje wpisany kod 2FA do bota na Telegramie, pozwalając atakującemu dokończyć prawdziwe logowanie - to obejście MFA na poziomie człowieka, nie kryptografii. Oparte na prawdziwym dochodzeniu THREAT-023.",
+  "steps": [
+    {
+      "scenario_id": "029_meta_trademark_phishing_email",
+      "narrative": "Skrzynka firmowa dostała groźbę ograniczenia konta za rzekome naruszenie praw autorskich Meta. Znajdź tę wiadomość."
+    },
+    {
+      "scenario_id": "030_meta_phishing_signin_anomaly",
+      "narrative": "Strona phishingowa przekazała hasło i kod 2FA atakującemu w czasie rzeczywistym. Sprawdź, czy w SigninLogs widać udane logowanie spoza siedziby firmy, mimo że konto ma MFA."
+    },
+    {
+      "kind": "action",
+      "title": "Powstrzymanie",
+      "narrative": "MFA zostało obejście przez przekazanie kodu na żywo, więc samo posiadanie 2FA nie ochroniło konta - trzeba przeciąć sesję ręcznie.",
+      "actions": [
+        "Zablokuj logowanie konta i odwołaj wszystkie aktywne sesje/tokeny odświeżania.",
+        "Zablokuj domenę nadawcy raisnagar.org oraz link pośredniczący beacons.ai na bramce pocztowej/proxy.",
+        "Wymuś reset hasła i ponowną rejestrację MFA (stare urządzenie MFA może być nadal zaufane przez atakującego)."
+      ]
+    },
+    {
+      "kind": "action",
+      "title": "Oceń zasięg i ogranicz podobne ataki",
+      "narrative": "To była wspólna skrzynka firmowa - sprawdź, kto miał do niej dostęp, i czy to samo hasło mogło być użyte gdzie indziej.",
+      "actions": [
+        "Sprawdź, kto ma dostęp do skrzynki biuro@ i czy używa tego samego hasła w innych systemach.",
+        "Przeszukaj proxy pod kątem ruchu do api.telegram.org z innych urządzeń w podobnym oknie czasowym - może to być ta sama kampania.",
+        "Przypomnij zespołowi, że prawdziwe powiadomienia od Meta/Facebooka nigdy nie proszą o podanie kodu 2FA na stronie trzeciej."
+      ]
+    }
+  ]
+}

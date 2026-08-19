@@ -1,0 +1,7 @@
+{
+  "id": "summarize",
+  "title": "summarize - grupowanie i agregacja",
+  "description": "Najważniejszy operator do wykrywania wzorców, nie pojedynczych zdarzeń: `summarize` grupuje wiersze według `by` i liczy agregaty (`count()`, `sum()`, `avg()`, `dcount()`, `min()`, `max()`) w każdej grupie. Zamiast przeglądać setki wierszy ręcznie, pytasz od razu 'które urządzenie ma najwięcej zdarzeń' albo 'ile różnych kont logowało się z tego IP'.",
+  "example_query": "DeviceProcessEvents | summarize EventCount = count() by DeviceName",
+  "example_explanation": "Grupuje wszystkie zdarzenia procesów po urządzeniu i liczy, ile zdarzeń miało każde z nich - jeden wiersz wyniku na urządzenie, zamiast setek wierszy surowych zdarzeń. To jest dokładnie ten sam wzorzec, którego użyjesz w scenariuszach do wykrywania anomalii (np. nietypowo dużej liczby prób logowania czy zmian nazw plików)."
+}

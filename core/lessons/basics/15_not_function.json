@@ -1,0 +1,7 @@
+{
+  "id": "not_function",
+  "title": "not() - negacja warunku",
+  "description": "`not(warunek)` odwraca wynik logiczny warunku w środku - przydatne, gdy łatwiej opisać czego szukasz NIE chcesz, niż wymienić wszystkie pasujące przypadki. W tym silniku nie ma osobnego operatora `!in`/`!contains` - negację zawsze zapisuje się przez opakowanie całego warunku w `not(...)`.",
+  "example_query": "DeviceProcessEvents | where FileName == 'powershell.exe' | where not(ProcessCommandLine contains '-enc') | project DeviceName, ProcessCommandLine",
+  "example_explanation": "Znajdujemy uruchomienia powershell.exe, których linia poleceń NIE zawiera '-enc' (czyli nie jest zakodowana base64) - to odwrotność zapytania z lekcji o `extend`. Zwraca 2 wiersze: pobranie narzędzia RMM i wyłączenie wykluczenia w Defenderze na WIN-SRV02 - jawny, czytelny PowerShell bez kodowania."
+}

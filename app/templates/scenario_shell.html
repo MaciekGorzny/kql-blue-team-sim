@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}{{ page_title }} - Blue Team Simulator{% endblock %}
+{% block main_class %}full-bleed{% endblock %}
+{% block content %}
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <button id="import-btn" class="btn btn-secondary" type="button">Importuj ćwiczenie z JSON</button>
+      <input type="file" id="import-file-input" accept="application/json" hidden>
+    </div>
+    <a href="/sandbox" id="sandbox-link" class="sidebar-item sidebar-item-pinned" data-scenario-id="__sandbox__">
+      🔍 Wolne zapytania
+    </a>
+    <details class="sidebar-section" open>
+      <summary>Ćwiczenia</summary>
+      <nav class="sidebar-list" id="sidebar-list"></nav>
+    </details>
+    <details class="sidebar-section" open>
+      <summary>Lekcje</summary>
+      <nav class="sidebar-list" id="lessons-list"></nav>
+    </details>
+    <details class="sidebar-section" open>
+      <summary>Scenariusze</summary>
+      <nav class="sidebar-list" id="incidents-list"></nav>
+    </details>
+    <div id="import-feedback" class="import-feedback" hidden></div>
+  </aside>
+  <div class="sidebar-resize-handle" id="sidebar-resize" title="Przeciągnij, aby zmienić szerokość (dwuklik = domyślna)"></div>
+  <section class="main-panel" id="main-panel"></section>
+</div>
+<script type="application/json" id="scenarios-data">{{ scenarios_json | safe }}</script>
+<script type="application/json" id="lessons-data">{{ lessons_json | safe }}</script>
+<script type="application/json" id="incidents-data">{{ incidents_json | safe }}</script>
+<script type="application/json" id="initial-scenario-data">{{ scenario_json | safe }}</script>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', path='app.js') }}"></script>
+{% endblock %}

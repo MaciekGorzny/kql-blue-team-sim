@@ -1,0 +1,7 @@
+{
+  "id": "let",
+  "title": "let - nazwane stałe i progi",
+  "description": "`let nazwa = wyrażenie;` definiuje zmienną na początku zapytania (przed nazwą tabeli), której możesz potem używać jak zwykłej kolumny w `where`, `project`, `extend` czy `summarize`. Świetne do nazywania progów/wartości, żeby zapytanie było czytelne i łatwe do zmiany w jednym miejscu - dokładnie tak piszą reguły detekcyjne prawdziwi analitycy. Można zdefiniować kilka `let` po kolei (każdy zakończony `;`), a kolejne mogą odwoływać się do wcześniejszych.",
+  "example_query": "let target = 'powershell.exe'; DeviceProcessEvents | where FileName == target | count",
+  "example_explanation": "Zamiast wpisywać 'powershell.exe' bezpośrednio w `where`, nazywamy tę wartość `target` na początku zapytania. Dla jednego użycia to kosmetyka, ale gdy ta sama wartość (albo próg liczbowy) pojawia się kilka razy w długim zapytaniu, `let` pozwala zmienić ją w jednym miejscu zamiast szukać po całym tekście."
+}

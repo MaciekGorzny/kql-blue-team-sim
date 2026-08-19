@@ -1,0 +1,39 @@
+{
+  "id": "02_devicecode_phishing_and_containment",
+  "title": "Phishing przez device code + powstrzymanie IR",
+  "summary": "Użytkownik klika w link phishingowy udający zaproszenie na spotkanie i przepisuje atakującemu kod logowania (device-code phishing). Ten incydent łączy dochodzenie w KQL z krokami, których nie da się wykonać zapytaniem - zablokowaniem konta, odwołaniem sesji i sprawdzeniem zarejestrowanych urządzeń - dokładnie tak, jak wyglądałaby prawdziwa reakcja zespołu IR.",
+  "steps": [
+    {
+      "scenario_id": "019_devicecode_phishing_email",
+      "narrative": "Użytkownik zgłosił dziwną wiadomość o konieczności dokończenia logowania kodem, żeby dołączyć do spotkania. Zacznij od znalezienia wiadomości phishingowej, która to wywołała."
+    },
+    {
+      "scenario_id": "020_device_code_registration_signin",
+      "narrative": "Wygląda na phishing typu device-code: ofiara przepisała atakującemu kod logowania. Sprawdź, czy w SigninLogs widać rejestrację przez ten mechanizm."
+    },
+    {
+      "kind": "action",
+      "title": "Natychmiastowe powstrzymanie",
+      "narrative": "Masz już dowód phishingu i nieautoryzowanej rejestracji. Zanim pójdziesz dalej, przetnij dostęp atakującemu - każda minuta z ważną sesją to dodatkowy czas na dalsze działania.",
+      "actions": [
+        "Zablokuj logowanie konta w Entra ID: Users > [konto] > Block sign-in.",
+        "Odwołaj wszystkie sesje i tokeny odświeżania: Users > [konto] > Revoke sessions.",
+        "Wymuś reset hasła przy następnym logowaniu."
+      ]
+    },
+    {
+      "scenario_id": "013_signin_outside_home_location",
+      "narrative": "Zanim uznasz sprawę za zamkniętą, sprawdź szerzej: czy z tego samego lub innego nietypowego miejsca logował się ktoś jeszcze, zanim zablokowałeś konto."
+    },
+    {
+      "kind": "action",
+      "title": "Sprawdź i usuń nieautoryzowane urządzenia",
+      "narrative": "Atakujący zarejestrował własne urządzenie przez device code - samo zablokowanie konta i reset hasła go nie usuwa.",
+      "actions": [
+        "Entra ID > Users > [konto] > Devices - przejrzyj zarejestrowane/przyłączone urządzenia.",
+        "Usuń lub wyłącz każde urządzenie, którego użytkownik nie rozpoznaje.",
+        "Porównaj datę rejestracji z czasem z kroku 2 - urządzenie zarejestrowane w tym oknie jest najbardziej podejrzane."
+      ]
+    }
+  ]
+}

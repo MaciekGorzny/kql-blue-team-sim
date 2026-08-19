@@ -1,0 +1,57 @@
+{
+  "id": "01_prinz_eugen_ransomware",
+  "title": "Ransomware Prinz Eugen — pełny łańcuch ataku",
+  "summary": "Pięć scenariuszy, które osobno ćwiczą pojedyncze techniki, ułożone tu w jeden, prawdziwy łańcuch ataku ransomware na serwerze WIN-SRV02: od założenia backdoora, przez dostarczenie narzędzi, wyłączenie ochrony, aż po szyfrowanie i próbę zatarcia śladów - przeplecione krokami reakcji IR, których nie da się wykonać zapytaniem KQL. Oparte na prawdziwym dochodzeniu HUNT-002 (\"Prinz Eugen\") - po rozwiązaniu każdego kroku dochodzeniowego zobaczysz link do oryginalnego writeupa.",
+  "steps": [
+    {
+      "scenario_id": "014_backdoor_admin_account",
+      "narrative": "Dostajesz alert o nietypowej aktywności na WIN-SRV02. Zacznij od sprawdzenia, czy ktoś zapewnił sobie trwały dostęp (persystencję), zanim pójdziesz dalej."
+    },
+    {
+      "scenario_id": "015_rmm_spawns_downloader",
+      "narrative": "Konto-furtka już namierzone. Sprawdź, jak atakujący dostarczył sobie kolejne narzędzia - często przez nadużycie legalnego oprogramowania administracyjnego (RMM)."
+    },
+    {
+      "kind": "action",
+      "title": "Natychmiastowa izolacja hosta",
+      "narrative": "Masz już dwa niezależne dowody aktywnego włamania: backdoorowe konto i RMM użyte do pobrania narzędzi. Zanim sprawdzisz, jak daleko zaszedł atak, przetnij mu możliwość dalszego działania.",
+      "actions": [
+        "Odizoluj WIN-SRV02 od sieci (network containment w Defenderze albo ręcznie na switchu/firewallu).",
+        "Zablokuj i wyłącz backdoorowe konto znalezione w poprzednim kroku.",
+        "Poinformuj przełożonego/właściciela systemu - serwer może wymagać wyłączenia z produkcji."
+      ]
+    },
+    {
+      "scenario_id": "016_ransomware_impact_prep",
+      "narrative": "Atakujący ma już dostęp i narzędzia. Zanim zaszyfruje dane, zwykle wyłącza ochronę i usuwa możliwość odzyskania plików z kopii w tle - poszukaj tych śladów."
+    },
+    {
+      "scenario_id": "017_mass_file_rename_burst",
+      "narrative": "Obrona wyłączona, kopie w tle skasowane - czas na właściwe szyfrowanie. Znajdź masową zmianę nazw plików, charakterystyczną dla ransomware."
+    },
+    {
+      "kind": "action",
+      "title": "Ocena szkód i przywracanie",
+      "narrative": "Szyfrowanie już się wydarzyło - lokalne kopie w tle są usunięte, więc jedyną drogą odzyskania danych są kopie zapasowe przechowywane poza zasięgiem atakującego.",
+      "actions": [
+        "Sprawdź zakres zaszyfrowanych danych i czy istnieją nienaruszone, izolowane (offline/immutable) kopie zapasowe.",
+        "Zabezpiecz obraz dysku/artefakty do dalszej analizy śledczej PRZED jakimkolwiek czyszczeniem hosta.",
+        "Rozpocznij odtwarzanie z kopii zapasowej dopiero po potwierdzeniu, że backdoor i mechanizmy persystencji zostały usunięte."
+      ]
+    },
+    {
+      "scenario_id": "018_ping_delay_self_delete",
+      "narrative": "Szyfrowanie zakończone. Na koniec sprawdź, czy malware spróbował zatrzeć ślady, usuwając samo siebie."
+    },
+    {
+      "kind": "action",
+      "title": "Zamknięcie incydentu",
+      "narrative": "Cały łańcuch ataku jest już potwierdzony. Zanim uznasz sprawę za zamkniętą, upewnij się, że to samo nie dzieje się gdzie indziej i że wnioski z incydentu zostaną wykorzystane.",
+      "actions": [
+        "Przeszukaj całe środowisko pod kątem tych samych IOC/technik (to samo konto, ta sama linia poleceń, ten sam C2) na innych urządzeniach.",
+        "Zresetuj hasła/tokeny każdego konta, które miało kontakt z zainfekowanym hostem.",
+        "Spisz raport post-incydentalny (co poszło nie tak, co zadziałało) i zaktualizuj reguły detekcji."
+      ]
+    }
+  ]
+}

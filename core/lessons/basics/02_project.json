@@ -1,0 +1,7 @@
+{
+  "id": "project",
+  "title": "project - wybieranie kolumn",
+  "description": "Tabele zdarzeń mają zwykle kilkanaście kolumn, a do analizy potrzebujesz tylko kilku. `project` zostawia wyłącznie wymienione kolumny, w podanej kolejności - świetne do robienia czytelnych, wąskich wyników zamiast przewijania w bok. Możesz też przy okazji zmienić nazwę kolumny: `project NowaNazwa = StaraKolumna`.",
+  "example_query": "DeviceProcessEvents | where FileName == 'powershell.exe' | project DeviceName, AccountName, ProcessCommandLine",
+  "example_explanation": "Z całego szerokiego zdarzenia procesu zostają tylko trzy kolumny, które faktycznie chcemy zobaczyć: urządzenie, konto i pełna linia poleceń. Kolejność kolumn w wyniku odpowiada kolejności w `project`."
+}

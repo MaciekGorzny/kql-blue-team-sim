@@ -1,0 +1,28 @@
+{
+  "id": "007_lateral_movement_join",
+  "title": "Ruch boczny: proces po zdalnym logowaniu",
+  "prompt": "Podejrzewamy ruch boczny (lateral movement). Połącz DeviceProcessEvents z DeviceLogonEvents (join po DeviceName i AccountName) ograniczając prawą stronę do logowań typu 'RemoteInteractive', a następnie policz, ile zdarzeń utworzenia procesu miało miejsce na takich urządzeniach/kontach. Zwróć DeviceName i liczbę zdarzeń jako ProcessCount.",
+  "datasets": [
+    "DeviceProcessEvents",
+    "DeviceLogonEvents"
+  ],
+  "difficulty": "advanced",
+  "mitre_techniques": [
+    "T1021.002",
+    "T1570"
+  ],
+  "hint": "`join kind=inner (DeviceLogonEvents | where LogonType == 'RemoteInteractive') on DeviceName, AccountName`, potem `summarize ProcessCount = count() by DeviceName`. Pamiętaj, że `kind=` jest obowiązkowe w tym silniku.",
+  "sc200_area": "Microsoft Defender for Endpoint (MDE)",
+  "validation": {
+    "result_match": {
+      "reference_query": "DeviceProcessEvents | join kind=inner (DeviceLogonEvents | where LogonType == 'RemoteInteractive') on DeviceName, AccountName | summarize ProcessCount = count() by DeviceName",
+      "ordered": false
+    },
+    "required_usage": {
+      "required_operators": [
+        "JoinStage",
+        "SummarizeStage"
+      ]
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "id": "017_mass_file_rename_burst",
+  "title": "Masowa zmiana nazw plików (szyfrowanie ransomware)",
+  "prompt": "Ransomware zwykle zmienia nazwy setek plików w bardzo krótkim czasie. W DeviceFileEvents znajdź urządzenia z nietypowo dużą liczbą zdarzeń FileRenamed w 5-minutowych oknach czasowych. Pogrupuj po DeviceName i 5-minutowym oknie (bin), policz zdarzenia jako RenameCount, zostaw tylko okna z RenameCount > 30.",
+  "datasets": [
+    "DeviceFileEvents"
+  ],
+  "difficulty": "advanced",
+  "mitre_techniques": [
+    "T1486"
+  ],
+  "hint": "`summarize RenameCount = count() by DeviceName, TimeBucket = bin(Timestamp, 5m)`, potem drugi `where RenameCount > 30`. Uwaga: `bin(...)` w klauzuli `by` musi mieć nadaną nazwę (`TimeBucket = bin(...)`) - sam `bin(Timestamp, 5m)` bez aliasu nie zadziała w tym silniku.",
+  "source_url": "https://maciekgorzny.github.io/security-writeups/hunt-002.html",
+  "sc200_area": "Microsoft Defender for Endpoint (MDE)",
+  "validation": {
+    "result_match": {
+      "reference_query": "DeviceFileEvents | where ActionType == 'FileRenamed' | summarize RenameCount = count() by DeviceName, TimeBucket = bin(Timestamp, 5m) | where RenameCount > 30",
+      "ordered": false
+    },
+    "required_usage": {
+      "required_operators": [
+        "SummarizeStage"
+      ]
+    }
+  }
+}

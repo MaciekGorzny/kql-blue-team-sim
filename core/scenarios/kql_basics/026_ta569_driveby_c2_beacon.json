@@ -1,0 +1,22 @@
+{
+  "id": "026_ta569_driveby_c2_beacon",
+  "title": "Zainfekowane strony e-commerce: beacon do znanej infrastruktury C2",
+  "prompt": "Dwóch użytkowników trafiło (przez wyniki wyszukiwania) na zainfekowane, skądinąd legalne polskie sklepy internetowe, które przekierowały ich przeglądarki do infrastruktury C2 znanej grupy. Masz listę trzech znanych adresów IP tej infrastruktury: 176.53.147.97, 185.76.79.50, 185.159.129.211. W DeviceNetworkEvents znajdź wszystkie połączenia do KTÓREGOKOLWIEK z nich (użyj `let` + `dynamic()` + `in`). Zwróć DeviceName, RemoteIP, RemoteUrl i InitiatingProcessFileName.",
+  "datasets": [
+    "DeviceNetworkEvents"
+  ],
+  "difficulty": "intermediate",
+  "mitre_techniques": [
+    "T1189",
+    "T1071.001"
+  ],
+  "hint": "`let c2ips = dynamic(['176.53.147.97','185.76.79.50','185.159.129.211']); DeviceNetworkEvents | where RemoteIP in (c2ips) | project ...` - dokładnie tak, jak w lekcji o `dynamic()` i `in`.",
+  "source_url": "https://maciekgorzny.github.io/security-writeups/inc-7936.html",
+  "sc200_area": "Microsoft Defender for Endpoint (MDE)",
+  "validation": {
+    "result_match": {
+      "reference_query": "let c2ips = dynamic(['176.53.147.97','185.76.79.50','185.159.129.211']); DeviceNetworkEvents | where RemoteIP in (c2ips) | project DeviceName, RemoteIP, RemoteUrl, InitiatingProcessFileName",
+      "ordered": false
+    }
+  }
+}

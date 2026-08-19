@@ -1,0 +1,22 @@
+{
+  "id": "013_signin_outside_home_location",
+  "title": "Udane logowania spoza siedziby firmy",
+  "prompt": "W SigninLogs znajdź udane logowania (ResultType == '0') pochodzące spoza typowej lokalizacji firmy ('Warszawa, PL') - to może wskazywać na przejęcie sesji (kradzież tokenu / AiTM) albo inny nieautoryzowany dostęp, nawet jeśli logowanie samo w sobie nie zostało odrzucone. Zwróć UserPrincipalName, IPAddress, Location i TimeGenerated.",
+  "datasets": [
+    "SigninLogs"
+  ],
+  "difficulty": "intermediate",
+  "mitre_techniques": [
+    "T1550.001",
+    "T1078.004"
+  ],
+  "hint": "`where ResultType == '0' and Location != 'Warszawa, PL'` - pamiętaj, że to zapytanie może zwrócić więcej niż jedno konto, jeśli w logach jest więcej niż jeden incydent.",
+  "source_url": "https://maciekgorzny.github.io/security-writeups/threat-010.html",
+  "sc200_area": "Microsoft Entra ID",
+  "validation": {
+    "result_match": {
+      "reference_query": "SigninLogs | where ResultType == '0' and Location != 'Warszawa, PL' | project UserPrincipalName, IPAddress, Location, TimeGenerated",
+      "ordered": false
+    }
+  }
+}

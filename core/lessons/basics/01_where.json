@@ -1,0 +1,7 @@
+{
+  "id": "where",
+  "title": "where - filtrowanie wierszy",
+  "description": "Podstawowy operator KQL: zostawia tylko te wiersze tabeli, które spełniają podany warunek. To jest niemal zawsze pierwszy krok w zapytaniu - zawężasz ogromną tabelę zdarzeń do tego, co faktycznie Cię interesuje (konkretny proces, urządzenie, konto, zakres czasu). Warunki można łączyć operatorami `and`/`or`, a do tekstu służą dodatkowo `==`/`!=`, `contains`, `startswith`, `endswith`, `has` i `matches regex`.",
+  "example_query": "DeviceProcessEvents | where FileName == 'powershell.exe' | take 5",
+  "example_explanation": "Zostawia tylko zdarzenia uruchomienia procesu, gdzie nazwa pliku to dokładnie 'powershell.exe', a `take 5` ogranicza wynik do pierwszych 5 wierszy, żeby nie zalać ekranu. Bez `where` dostałbyś WSZYSTKIE zdarzenia z tabeli - `where` to Twoje pierwsze narzędzie do zawężania danych."
+}

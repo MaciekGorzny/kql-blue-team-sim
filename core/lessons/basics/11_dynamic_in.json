@@ -1,0 +1,7 @@
+{
+  "id": "dynamic_in",
+  "title": "dynamic() + in - sprawdzanie przynależności do listy",
+  "description": "`dynamic([...])` tworzy listę wartości, a operator `in` sprawdza, czy wartość z lewej strony znajduje się w tej liście - odpowiednik pytania 'czy X jest jednym z tych kilku'. Możesz napisać listę wprost w miejscu (`Col in ('a', 'b', 'c')`) albo nazwać ją przez `let` i użyć w wielu miejscach zapytania - to drugie jest typowe dla prawdziwych reguł Sentinela/Defendera, gdzie na górze zapytania definiuje się np. listę znanych narzędzi LOLBin. Negacja nie ma osobnego `!in` w tym silniku - użyj `not(X in (...))`.",
+  "example_query": "let suspicious = dynamic(['powershell.exe', 'cmd.exe', 'mshta.exe']); DeviceProcessEvents | where FileName in (suspicious) | count",
+  "example_explanation": "Definiujemy listę trzech nazw procesów jako `suspicious`, a potem sprawdzamy, ile zdarzeń w DeviceProcessEvents dotyczy KTÓREGOKOLWIEK z nich - bez potrzeby pisania `FileName == 'a' or FileName == 'b' or FileName == 'c'`. To dokładnie ten wzorzec, którego prawdziwe reguły detekcyjne (np. listy LOLBinów czy znanych narzędzi RMM) używają non-stop."
+}

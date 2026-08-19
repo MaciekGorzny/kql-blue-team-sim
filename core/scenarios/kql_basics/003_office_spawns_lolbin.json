@@ -1,0 +1,22 @@
+{
+  "id": "003_office_spawns_lolbin",
+  "title": "Office uruchamia cmd/PowerShell",
+  "prompt": "Aplikacje pakietu Office (WINWORD.EXE, OUTLOOK.EXE) nie powinny uruchamiać cmd.exe ani powershell.exe - to klasyczny wzorzec phishingu z załącznikiem/makrem. Znajdź takie przypadki. Zwróć DeviceName, AccountName, InitiatingProcessFileName, FileName, ProcessCommandLine.",
+  "datasets": [
+    "DeviceProcessEvents"
+  ],
+  "difficulty": "intermediate",
+  "mitre_techniques": [
+    "T1204.002",
+    "T1059.003",
+    "T1059.001"
+  ],
+  "hint": "Potrzebujesz `(A or B) and (C or D)` - pamiętaj, że `and` wiąże mocniej niż `or`, więc nawiasy są konieczne.",
+  "sc200_area": "Microsoft Defender for Endpoint (MDE)",
+  "validation": {
+    "result_match": {
+      "reference_query": "DeviceProcessEvents | where (InitiatingProcessFileName == 'WINWORD.EXE' or InitiatingProcessFileName == 'OUTLOOK.EXE') and (FileName == 'cmd.exe' or FileName == 'powershell.exe') | project DeviceName, AccountName, InitiatingProcessFileName, FileName, ProcessCommandLine",
+      "ordered": false
+    }
+  }
+}

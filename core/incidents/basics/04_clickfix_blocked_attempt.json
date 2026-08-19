@@ -1,0 +1,31 @@
+{
+  "id": "04_clickfix_blocked_attempt",
+  "title": "Zablokowana próba ClickFix",
+  "summary": "Phishing pod marką znanego klubu piłkarskiego prowadzi do strony ClickFix, która nakłania użytkownika do ręcznego wklejenia i uruchomienia polecenia PowerShell. Defender zablokował wykonanie na najwcześniejszym możliwym etapie, zanim doszło do instalacji docelowego narzędzia zdalnego dostępu - Twoim zadaniem jest to potwierdzić, a nie odkryć włamanie od zera. Oparte na prawdziwym dochodzeniu THREAT-025.",
+  "steps": [
+    {
+      "scenario_id": "023_clickfix_blocked_powershell",
+      "narrative": "Defender zgłosił zablokowane polecenie PowerShell. Znajdź je i potwierdź, że to rzeczywiście technika ClickFix (polecenie uruchomione ręcznie z okna Uruchom, nie przez skrypt)."
+    },
+    {
+      "kind": "action",
+      "title": "Potwierdź, że nic dalej nie uciekło",
+      "narrative": "Defender zablokował tylko pierwszy etap - zanim zamkniesz sprawę, musisz samodzielnie potwierdzić, że kolejne etapy (instalator Python.msi, RAT ScreenConnect) nigdy nie zostały pobrane ani uruchomione.",
+      "actions": [
+        "Przeszukaj DeviceProcessEvents i DeviceNetworkEvents na tym urządzeniu pod kątem śladów Python.msi lub ScreenConnect/ConnectWise z okresu po zablokowanym poleceniu.",
+        "Sprawdź w konsoli Defendera, czy alert ma status 'Blocked'/'Prevented', a nie tylko 'Detected'.",
+        "Porozmawiaj z użytkownikiem - potwierdź, że nie klikał dalej ani nie wpisywał niczego więcej po komunikacie o zablokowaniu."
+      ]
+    },
+    {
+      "kind": "action",
+      "title": "Ogranicz dalsze ryzyko",
+      "narrative": "Sam incydent został powstrzymany, ale kampania phishingowa może nadal trafiać do innych osób w organizacji.",
+      "actions": [
+        "Zablokuj domenę dostarczającą stronę ClickFix na proxy/firewallu/bramce pocztowej.",
+        "Wyślij krótką notatkę do zespołu ostrzegającą przed proszeniem użytkowników o ręczne wklejanie poleceń (to zawsze podejrzane, niezależnie od pretekstu).",
+        "Sprawdź, czy inni odbiorcy tej samej kampanii również otrzymali i kliknęli wiadomość."
+      ]
+    }
+  ]
+}

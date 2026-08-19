@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="pl" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Blue Team Simulator{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+</head>
+<body>
+  <header class="app-header">
+    <a class="brand" href="/scenarios">
+      Blue Team Simulator <span class="brand-module">/ KQL</span>
+    </a>
+  </header>
+  <main class="app-main {% block main_class %}{% endblock %}">
+    {% block content %}{% endblock %}
+  </main>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

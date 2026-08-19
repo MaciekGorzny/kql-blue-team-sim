@@ -1,0 +1,31 @@
+{
+  "id": "05_fake_invoice_c2_beacon",
+  "title": "Instalator udający fakturę łączy się z C2",
+  "summary": "Użytkownik uruchamia instalator podszywający się pod zaległą fakturę - zamiast dokumentu dostaje cichy instalator (NSIS-style), który od razu nawiązuje połączenie z serwerem C2 atakującego. Krótki, ale kompletny łańcuch: wykrycie, powstrzymanie i polowanie na ten sam wskaźnik w reszcie środowiska. Oparte na prawdziwym dochodzeniu THREAT-022.",
+  "steps": [
+    {
+      "scenario_id": "012_fake_invoice_installer_beacon",
+      "narrative": "Zgłoszenie: użytkownik otworzył 'fakturę', a antywirus zaczął alarmować o ruchu sieciowym. Znajdź połączenie do C2 zainicjowane przez ten instalator."
+    },
+    {
+      "kind": "action",
+      "title": "Powstrzymanie",
+      "narrative": "Masz już adres C2 i nazwę złośliwego procesu - czas przeciąć komunikację i odizolować zainfekowaną maszynę.",
+      "actions": [
+        "Zablokuj adres IP/domenę C2 na firewallu/proxy.",
+        "Odizoluj zainfekowane urządzenie od sieci.",
+        "Zakończ proces instalatora i poddaj kwarantannie pobrany plik."
+      ]
+    },
+    {
+      "kind": "action",
+      "title": "Polowanie na ten sam wskaźnik",
+      "narrative": "Ten sam instalator mógł trafić do innych osób w tej samej kampanii phishingowej.",
+      "actions": [
+        "Przeszukaj DeviceNetworkEvents na wszystkich urządzeniach pod kątem tego samego adresu C2.",
+        "Sprawdź bramkę pocztową pod kątem tej samej kampanii (nadawca, temat, załącznik) i usuń pozostałe kopie wiadomości.",
+        "Upewnij się, że żadne inne urządzenie nie uruchomiło tego samego instalatora (ta sama nazwa pliku/skrót)."
+      ]
+    }
+  ]
+}

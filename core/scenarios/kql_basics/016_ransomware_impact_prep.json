@@ -1,0 +1,22 @@
+{
+  "id": "016_ransomware_impact_prep",
+  "title": "Przygotowanie do ataku ransomware: Defender i kopie w tle",
+  "prompt": "Przed zaszyfrowaniem danych operatorzy ransomware zwykle wyłączają ochronę i usuwają kopie w tle. W DeviceProcessEvents znajdź albo (a) powershell.exe z 'ExclusionPath' w linii poleceń (wykluczenie w Defenderze), albo (b) vssadmin.exe usuwający kopie w tle ('delete' i 'shadows' w linii poleceń). Zwróć DeviceName, FileName i ProcessCommandLine.",
+  "datasets": [
+    "DeviceProcessEvents"
+  ],
+  "difficulty": "advanced",
+  "mitre_techniques": [
+    "T1562.001",
+    "T1490"
+  ],
+  "hint": "Dwa niezależne warunki połączone `or`, każdy sam w sobie to `and` dwóch sprawdzeń - pamiętaj o nawiasach: `(FileName == 'powershell.exe' and ProcessCommandLine has 'ExclusionPath') or (FileName == 'vssadmin.exe' and ProcessCommandLine has 'delete' and ProcessCommandLine has 'shadows')`.",
+  "source_url": "https://maciekgorzny.github.io/security-writeups/hunt-001.html",
+  "sc200_area": "Microsoft Defender for Endpoint (MDE)",
+  "validation": {
+    "result_match": {
+      "reference_query": "DeviceProcessEvents | where (FileName == 'powershell.exe' and ProcessCommandLine has 'ExclusionPath') or (FileName == 'vssadmin.exe' and ProcessCommandLine has 'delete' and ProcessCommandLine has 'shadows') | project DeviceName, FileName, ProcessCommandLine",
+      "ordered": false
+    }
+  }
+}

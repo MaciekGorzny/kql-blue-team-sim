@@ -1,0 +1,7 @@
+{
+  "id": "join",
+  "title": "join - łączenie dwóch tabel",
+  "description": "`join` łączy wiersze z dwóch tabel po wspólnej kolumnie (lub kolumnach) - dokładnie tak jak w SQL. W tym silniku `kind=` jest obowiązkowy: `kind=inner` zostawia tylko dopasowane pary z obu stron, `kind=leftouter` zostawia też niedopasowane wiersze z lewej strony (z pustymi wartościami z prawej). Prawa strona joina jest sama w sobie pełnym pod-zapytaniem w nawiasach, więc możesz ją najpierw przefiltrować.",
+  "example_query": "DeviceProcessEvents | join kind=inner (DeviceLogonEvents | where LogonType == 'RemoteInteractive') on DeviceName, AccountName | count",
+  "example_explanation": "Łączy zdarzenia procesów z logowaniami zdalnymi (RemoteInteractive) po tym samym urządzeniu i koncie - czyli pyta 'ile zdarzeń procesów miało miejsce na urządzeniach/kontach, które miały też zdalne logowanie'. To jest dokładnie technika wykrywania ruchu bocznego (lateral movement) użyta w jednym ze scenariuszy zaawansowanych."
+}

@@ -1,0 +1,28 @@
+{
+  "id": "011_dll_sideload_downloads",
+  "title": "DLL sideloading z folderu Downloads",
+  "prompt": "Podejrzewamy DLL sideloading: legalnie wyglądający program uruchomiony z folderu Downloads, obok którego chwilę wcześniej podrzucono bibliotekę .dll. W DeviceFileEvents znajdź świeżo utworzone pliki .dll w ścieżkach zawierających 'Downloads', a następnie (join po DeviceName) sprawdź w DeviceProcessEvents, jakie procesy uruchomiły się na tych samych urządzeniach również z 'Downloads'. Zwróć DeviceName, nazwę zrzuconej biblioteki (DroppedDll) i nazwę uruchomionego procesu (ExecutedProcess).",
+  "datasets": [
+    "DeviceFileEvents",
+    "DeviceProcessEvents"
+  ],
+  "difficulty": "advanced",
+  "mitre_techniques": [
+    "T1574.002",
+    "T1204.002"
+  ],
+  "hint": "Obie strony joina warto ograniczyć do `FolderPath has 'Downloads'` - inaczej złapiesz też niepowiązane zdarzenia z innych incydentów na tym samym urządzeniu. Kolumna FileName występuje w obu tabelach, więc po joinie prawa strona pojawi się jako FileName1 - zmień jej nazwę przez `project ... = FileName1`.",
+  "source_url": "https://maciekgorzny.github.io/security-writeups/threat-005.html",
+  "sc200_area": "Microsoft Defender for Endpoint (MDE)",
+  "validation": {
+    "result_match": {
+      "reference_query": "DeviceFileEvents | where FileName endswith '.dll' and FolderPath has 'Downloads' | join kind=inner (DeviceProcessEvents | where FolderPath has 'Downloads') on DeviceName | project DeviceName, DroppedDll = FileName, ExecutedProcess = FileName1",
+      "ordered": false
+    },
+    "required_usage": {
+      "required_operators": [
+        "JoinStage"
+      ]
+    }
+  }
+}

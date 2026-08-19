@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Real, user-imported scenarios generated from actual malware-analysis
+# output (real IOCs/hashes/C2 infra) - not meant for the public repo, unlike
+# the synthetic built-in scenarios in core/scenarios/kql_basics/. The app
+# recreates this directory on demand the first time something is imported.
+core/scenarios/imported/
+
+# Local Claude Code harness state, not project content.
+.claude/

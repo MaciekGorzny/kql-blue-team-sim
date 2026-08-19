@@ -1,0 +1,21 @@
+{
+  "id": "030_meta_phishing_signin_anomaly",
+  "title": "Logowanie po przechwyceniu hasła i kodu 2FA w czasie rzeczywistym",
+  "prompt": "Strona phishingowa nie tylko zbierała hasło, ale w czasie rzeczywistym przekazywała też kod 2FA do bota na Telegramie, co pozwoliło atakującemu dokończyć prawdziwe logowanie. W SigninLogs znajdź udane logowanie na konto biuro@contoso.com spoza siedziby firmy ('Warszawa, PL'). Zwróć TimeGenerated, UserPrincipalName, IPAddress, Location i ResultType.",
+  "datasets": [
+    "SigninLogs"
+  ],
+  "difficulty": "intermediate",
+  "mitre_techniques": [
+    "T1566.002",
+    "T1078.004"
+  ],
+  "hint": "`where UserPrincipalName == 'biuro@contoso.com' and Location != 'Warszawa, PL'`, potem `project`.",
+  "source_url": "https://maciekgorzny.github.io/security-writeups/threat-023.html",
+  "sc200_area": "Microsoft Entra ID",
+  "validation": {
+    "result_match": {
+      "reference_query": "SigninLogs | where UserPrincipalName == 'biuro@contoso.com' and Location != 'Warszawa, PL' | project TimeGenerated, UserPrincipalName, IPAddress, Location, ResultType"
+    }
+  }
+}

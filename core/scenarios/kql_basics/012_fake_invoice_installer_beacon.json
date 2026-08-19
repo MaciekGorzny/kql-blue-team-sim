@@ -1,0 +1,21 @@
+{
+  "id": "012_fake_invoice_installer_beacon",
+  "title": "Instalator udający fakturę łączy się z C2",
+  "prompt": "W DeviceNetworkEvents znajdź połączenie sieciowe zainicjowane przez proces instalatora podszywającego się pod zaległą fakturę (nazwa pliku zawiera 'Setup'). Zwróć DeviceName, RemoteIP i InitiatingProcessFileName.",
+  "datasets": [
+    "DeviceNetworkEvents"
+  ],
+  "difficulty": "beginner",
+  "mitre_techniques": [
+    "T1204.002",
+    "T1071.001"
+  ],
+  "hint": "Sam `where InitiatingProcessFileName contains 'Setup'` i `project` wystarczą.",
+  "source_url": "https://maciekgorzny.github.io/security-writeups/threat-022.html",
+  "sc200_area": "Microsoft Defender for Endpoint (MDE)",
+  "validation": {
+    "result_match": {
+      "reference_query": "DeviceNetworkEvents | where InitiatingProcessFileName contains 'Setup' | project DeviceName, RemoteIP, InitiatingProcessFileName"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "id": "leftouter_join",
+  "title": "join kind=leftouter - zachowanie niedopasowanych wierszy",
+  "description": "Lekcja o `join` pokazała `kind=inner`, który zostawia tylko dopasowane pary z obu tabel. `kind=leftouter` zostawia WSZYSTKIE wiersze z lewej tabeli, nawet jeśli nie mają dopasowania po prawej stronie - dla niedopasowanych wierszy kolumny z prawej tabeli mają wartość pustą (None). To przydaje się, gdy pytanie brzmi 'dla każdego X, czy zdarzyło się też Y' - łącznie z tymi X, dla których Y nie wystąpiło.",
+  "example_query": "DeviceLogonEvents | join kind=leftouter (DeviceProcessEvents | where FileName == 'PSEXESVC.exe') on DeviceName | project DeviceName, FileName | take 5",
+  "example_explanation": "Dla każdego logowania sprawdzamy, czy na tym samym urządzeniu widzieliśmy też PSEXESVC.exe (ślad PsExec). Większość urządzeń nie ma dopasowania, więc FileName wychodzi None - ale wiersz i tak zostaje. Dla porównania: to samo zapytanie z `kind=inner` zwróciłoby tylko 9 wierszy (same dopasowania), a `kind=leftouter` zwraca wszystkie 41 logowań - łącznie z tymi bez podejrzanej aktywności. Dzięki temu widać od razu, ile urządzeń NIE miało śladu PsExec (FileName puste), zamiast tylko tych, które go miały."
+}

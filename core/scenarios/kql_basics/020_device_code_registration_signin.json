@@ -1,0 +1,20 @@
+{
+  "id": "020_device_code_registration_signin",
+  "title": "Rejestracja przez device code (phishing OAuth)",
+  "prompt": "Podejrzewasz, że ofiara przepisała atakującemu kod logowania w ataku typu device-code phishing. W SigninLogs znajdź logowanie zarejestrowane przez broker urządzeń Microsoft (AppDisplayName == 'Microsoft Authentication Broker') - to charakterystyczny ślad tego mechanizmu. Zwróć TimeGenerated, UserPrincipalName, IPAddress, Location i AppDisplayName.",
+  "datasets": [
+    "SigninLogs"
+  ],
+  "difficulty": "intermediate",
+  "mitre_techniques": [
+    "T1528",
+    "T1098.005"
+  ],
+  "hint": "`where AppDisplayName == 'Microsoft Authentication Broker'`, potem `project` - nie trzeba filtrować po koncie ani lokalizacji, sama nazwa aplikacji jest tu wystarczająco unikalnym sygnałem.",
+  "sc200_area": "Microsoft Entra ID",
+  "validation": {
+    "result_match": {
+      "reference_query": "SigninLogs | where AppDisplayName == 'Microsoft Authentication Broker' | project TimeGenerated, UserPrincipalName, IPAddress, Location, AppDisplayName"
+    }
+  }
+}

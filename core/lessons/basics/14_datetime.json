@@ -1,0 +1,7 @@
+{
+  "id": "datetime",
+  "title": "ago() i now() - filtrowanie po czasie",
+  "description": "`now()` zwraca bieżący czas (moment uruchomienia zapytania), a `ago(przedział)` zwraca czas cofnięty o podany przedział, np. `ago(1d)` to 'dokładnie 24h temu', `ago(30d)` to 'miesiąc temu'. To standardowy sposób pisania okien czasowych w Sentinelu, np. `where Timestamp > ago(7d)`. Uwaga: oba są liczone od zegara systemowego w momencie uruchomienia zapytania, a nie od danych w tabeli - jeśli okno jest węższe niż wiek danych treningowych w tej aplikacji, zapytanie może nie zwrócić żadnych wierszy mimo poprawnej składni.",
+  "example_query": "let cutoff = ago(30d); DeviceLogonEvents | where Timestamp > cutoff | count",
+  "example_explanation": "Wiążemy `ago(30d)` pod nazwą cutoff (patrz lekcja o `let`), a potem filtrujemy logowania nowsze niż ten próg. Zwraca wszystkie 41 wierszy, bo dane treningowe w tej aplikacji mają maksymalnie kilkanaście dni. Gdybyśmy użyli węższego okna, np. `ago(1d)`, zapytanie zwróciłoby 0 wierszy - to nie błąd składni, tylko właśnie efekt tego, że `ago()` liczy się od aktualnego zegara, a nie od najnowszego wiersza w tabeli. W realnym Sentinelu, gdzie dane napływają na bieżąco, ten problem nie występuje."
+}

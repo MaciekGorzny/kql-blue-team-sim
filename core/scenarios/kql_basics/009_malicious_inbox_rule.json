@@ -1,0 +1,19 @@
+{
+  "id": "009_malicious_inbox_rule",
+  "title": "Złośliwa reguła przekierowania poczty",
+  "prompt": "W tabeli OfficeActivity znajdź operację utworzenia reguły skrzynki (Operation == 'New-InboxRule'). Zwróć UserId, ClientIP i TimeGenerated.",
+  "datasets": [
+    "OfficeActivity"
+  ],
+  "difficulty": "beginner",
+  "mitre_techniques": [
+    "T1114.003"
+  ],
+  "hint": "Sam `where Operation == '...'` i `project` wystarczą - to najprostszy operator z Fazy 1.",
+  "sc200_area": "Microsoft Defender for Office 365",
+  "validation": {
+    "result_match": {
+      "reference_query": "OfficeActivity | where Operation == 'New-InboxRule' | project UserId, ClientIP, TimeGenerated"
+    }
+  }
+}

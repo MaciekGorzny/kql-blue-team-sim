@@ -1,0 +1,21 @@
+{
+  "id": "004_lolbas_download_or_execute",
+  "title": "LOLBins do pobierania/uruchamiania kodu",
+  "prompt": "certutil.exe i mshta.exe to popularne LOLBiny wykorzystywane do pobierania lub uruchamiania zewnętrznego kodu. Znajdź wszystkie ich uruchomienia. Zwróć DeviceName, FileName, ProcessCommandLine, posortowane rosnąco po DeviceName.",
+  "datasets": [
+    "DeviceProcessEvents"
+  ],
+  "difficulty": "intermediate",
+  "mitre_techniques": [
+    "T1105",
+    "T1218.005"
+  ],
+  "hint": "`sort by` domyślnie sortuje malejąco (tak jak w prawdziwym Kusto) - dla rosnąco trzeba jawnie dopisać `asc`.",
+  "sc200_area": "Microsoft Defender for Endpoint (MDE)",
+  "validation": {
+    "result_match": {
+      "reference_query": "DeviceProcessEvents | where FileName == 'certutil.exe' or FileName == 'mshta.exe' | project DeviceName, FileName, ProcessCommandLine | sort by DeviceName asc",
+      "ordered": true
+    }
+  }
+}

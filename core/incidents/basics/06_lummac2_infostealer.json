@@ -1,0 +1,35 @@
+{
+  "id": "06_lummac2_infostealer",
+  "title": "ClickFix → LummaC2: kradzież haseł i portfeli krypto",
+  "summary": "Fałszywy komunikat o błędzie na zainfekowanej stronie rekrutacyjnej nakłania użytkownika do wklejenia polecenia przez Win+R (ClickFix). Wieloetapowy łańcuch mshta → VBScript → PowerShell kończy się uruchomieniem infostealera LummaC2, który kradnie hasła, ciasteczka przeglądarki i portfele kryptowalut. Oparte na prawdziwym dochodzeniu INC-7987.",
+  "steps": [
+    {
+      "scenario_id": "024_lummac2_clickfix_mshta",
+      "narrative": "Użytkownik zgłosił, że po komunikacie o błędzie na stronie coś dziwnego uruchomiło mu się po wciśnięciu Win+R. Znajdź pierwszy krok łańcucha."
+    },
+    {
+      "scenario_id": "025_lummac2_staging_payload",
+      "narrative": "mshta uruchomił zdalny loader, który przez PowerShell pobrał kolejny etap. Znajdź finalny payload - powinien być ukryty w folderze podszywającym się pod dane aplikacji."
+    },
+    {
+      "kind": "action",
+      "title": "Powstrzymanie",
+      "narrative": "To infostealer, nie ransomware - jego głównym celem jest cicha kradzież danych, nie widoczne zniszczenie. Musisz działać, zanim skradzione dane zostaną wykorzystane.",
+      "actions": [
+        "Odizoluj urządzenie od sieci i zakończ proces Update.exe.",
+        "Zablokuj domeny guaicui.com.br i rednosehorse.com na proxy/firewallu.",
+        "Poddaj kwarantannie folder C:\\Users\\...\\AppData\\Local\\SystemCacheFiles\\."
+      ]
+    },
+    {
+      "kind": "action",
+      "title": "Reakcja na kradzież danych (nie tylko konta domenowego)",
+      "narrative": "Infostealer kradnie WSZYSTKO zapisane w przeglądarce na tym urządzeniu - hasła do kont niesłużbowych, ciasteczka sesji, portfele kryptowalut - nie tylko hasło domenowe użytkownika.",
+      "actions": [
+        "Wymuś reset hasła użytkownika i unieważnij zapisane w przeglądarce hasła/ciasteczka sesji.",
+        "Sprawdź, czy użytkownik miał na tym urządzeniu portfel kryptowalut lub menedżer haseł - w razie potrzeby ostrzeż go o konieczności zmiany wszystkich haseł tam przechowywanych.",
+        "Przeszukaj logi logowań pod kątem użycia skradzionych danych (nietypowe logowania z nowych lokalizacji) w dniach po incydencie."
+      ]
+    }
+  ]
+}

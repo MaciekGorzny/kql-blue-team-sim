@@ -1,0 +1,7 @@
+{
+  "id": "sort",
+  "title": "sort by / order by - sortowanie wyniku",
+  "description": "`sort by` (synonim: `order by`) ustawia kolejność wierszy w wyniku. Domyślnie sortuje malejąco (`desc`) - odwrotnie niż w wielu innych językach zapytań, więc jeśli chcesz rosnąco, dopisz jawnie `asc`. Najczęściej łączy się to z `summarize`, żeby od razu zobaczyć najbardziej 'wystający' wiersz na górze.",
+  "example_query": "DeviceProcessEvents | summarize EventCount = count() by DeviceName | sort by EventCount desc",
+  "example_explanation": "Najpierw liczymy zdarzenia na urządzenie (jak w lekcji o `summarize`), a potem sortujemy malejąco po liczbie zdarzeń - urządzenie z największą aktywnością ląduje na samej górze wyniku, co jest naturalnym pierwszym miejscem do spojrzenia podczas hunting."
+}

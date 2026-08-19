@@ -1,0 +1,19 @@
+{
+  "id": "019_devicecode_phishing_email",
+  "title": "E-mail phishingowy z pretekstem \"dokończ logowanie kodem\"",
+  "prompt": "Użytkownik zgłosił dziwną wiadomość o konieczności dokończenia logowania kodem, żeby dołączyć do spotkania. W EmailEvents znajdź wiadomość phishingową (ThreatTypes == 'Phish'), która trafiła do mwisniewski@contoso.com. Zwróć Timestamp, SenderFromAddress, Subject i UrlCount.",
+  "datasets": [
+    "EmailEvents"
+  ],
+  "difficulty": "beginner",
+  "mitre_techniques": [
+    "T1566.002"
+  ],
+  "hint": "`where ThreatTypes == 'Phish' and RecipientEmailAddress == 'mwisniewski@contoso.com'`, potem `project`.",
+  "sc200_area": "Microsoft Defender for Office 365",
+  "validation": {
+    "result_match": {
+      "reference_query": "EmailEvents | where ThreatTypes == 'Phish' and RecipientEmailAddress == 'mwisniewski@contoso.com' | project Timestamp, SenderFromAddress, Subject, UrlCount"
+    }
+  }
+}

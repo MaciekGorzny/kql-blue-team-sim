@@ -1,0 +1,20 @@
+{
+  "id": "029_meta_trademark_phishing_email",
+  "title": "Fałszywe naruszenie praw autorskich Meta",
+  "prompt": "Do wspólnej skrzynki firmowej trafił e-mail podszywający się pod dział prawny Meta, grożący ograniczeniem konta za rzekome naruszenie praw autorskich. W EmailEvents znajdź tę wiadomość po fragmencie domeny nadawcy 'raisnagar'. Zwróć Timestamp, SenderFromAddress, RecipientEmailAddress i Subject.",
+  "datasets": [
+    "EmailEvents"
+  ],
+  "difficulty": "beginner",
+  "mitre_techniques": [
+    "T1566.002"
+  ],
+  "hint": "`where SenderFromAddress has 'raisnagar'`, potem `project`.",
+  "source_url": "https://maciekgorzny.github.io/security-writeups/threat-023.html",
+  "sc200_area": "Microsoft Defender for Office 365",
+  "validation": {
+    "result_match": {
+      "reference_query": "EmailEvents | where SenderFromAddress has 'raisnagar' | project Timestamp, SenderFromAddress, RecipientEmailAddress, Subject"
+    }
+  }
+}
