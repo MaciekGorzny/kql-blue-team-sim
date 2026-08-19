@@ -74,7 +74,7 @@ webowego.
 3. Zainstaluj zależności do środowiska:
    `.venv/bin/pip install -r requirements.txt -r requirements-dev.txt`
 4. Uruchom testy: `.venv/bin/python -m pytest`
-   - powinno pokazać `301 passed`.
+   - powinno pokazać `313 passed`.
 5. Uruchom aplikację webową: `./run.sh` (domyślnie port 8731, można nadpisać
    zmienną środowiskową `PORT`) i otwórz w przeglądarce
    **http://127.0.0.1:8731/** - przekieruje na listę ćwiczeń.
@@ -153,7 +153,7 @@ jednoelementowy zbiór, a `x in (nazwa)` odwołuje się do listy związanej prze
 
 ## Datasety
 
-7 modułów w `core/datasets/`, każdy w pełni deterministyczny (bez modułu
+10 modułów w `core/datasets/`, każdy w pełni deterministyczny (bez modułu
 `random`), żeby "poprawna odpowiedź" nigdy się nie rozjechała z danymi:
 
 - `device_process_events.py` - DeviceProcessEvents, najbardziej rozbudowany:
@@ -168,6 +168,12 @@ jednoelementowy zbiór, a `x in (nazwa)` odwołuje się do listy związanej prze
 - `email_events.py` - EmailEvents (Defender for Office 365): kilka
   niezależnych kampanii phishingowych
 - `office_activity.py` - OfficeActivity
+- `identity_query_events.py` - IdentityQueryEvents (Defender for Identity):
+  zapytania LDAP/SAMR do katalogu, w tym rozpoznanie SPN przed Kerberoastingiem
+- `identity_logon_events.py` - IdentityLogonEvents (Defender for Identity):
+  uwierzytelnienia Kerberos/NTLM w on-premowym Active Directory
+- `identity_directory_events.py` - IdentityDirectoryEvents (Defender for
+  Identity): zdarzenia w katalogu, w tym replikacja (pod kątem DCSync)
 
 Wszystkie tabele razem tworzą jedną wspólną, stale rosnącą "pulę logów"
 (`core/scenarios/log_store.py`), do której zapytania odwołują się niezależnie
@@ -179,7 +185,7 @@ Dodanie nowego datasetu = nowy plik z `SCHEMA` i `ROWS`, plus jedna linia w
 
 ## Ćwiczenia
 
-30 ćwiczeń w `core/scenarios/kql_basics/`, rosnącej trudności - od gołego
+33 ćwiczenia w `core/scenarios/kql_basics/`, rosnącej trudności - od gołego
 `where` po `join` + `summarize`. Kilkanaście z nich odtwarza techniki z
 prawdziwych, publicznych analiz malware autora - link do oryginalnego
 writeupu pojawia się dopiero po poprawnym rozwiązaniu, jako nagroda, nie
@@ -233,7 +239,7 @@ uruchomić - po prostu bez sprawdzania poprawności.
 
 ## Scenariusze
 
-9 scenariuszy w `core/incidents/basics/` (w kodzie i adresach URL wciąż pod
+10 scenariuszy w `core/incidents/basics/` (w kodzie i adresach URL wciąż pod
 nazwą `Incident`/`/incidents/*` - patrz sekcja o nazewnictwie niżej). Każdy
 scenariusz to uporządkowana lista kroków opowiadająca pełną historię
 incydentu, łącząca dwa rodzaje kroków:
@@ -285,7 +291,7 @@ tagowanie obszaru SC-200 (dla osób przygotowujących się do egzaminu
 Microsoft SC-200), tryb "Wolne zapytania" (sandbox) bez przypisanego
 ćwiczenia.
 
-Przetestowane automatycznie (`tests/test_app/`, FastAPI `TestClient`, 301
+Przetestowane automatycznie (`tests/test_app/`, FastAPI `TestClient`, 313
 testów w całym repo) oraz ręcznie przez `curl` na realnie odpalonym
 serwerze. Interfejs w prawdziwej przeglądarce testował wyłącznie człowiek
 nadzorujący projekt - jeśli coś w UI wygląda nie tak, zgłoś to jako feedback
