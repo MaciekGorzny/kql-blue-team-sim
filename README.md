@@ -54,7 +54,7 @@ reszty systemu.
 4. Uruchom testy: `.venv/bin/python -m pytest`
    — powinno pokazać `135 passed`.
 5. Uruchom aplikację webową: `.venv/bin/uvicorn app.main:app --reload`
-   i otwórz w przeglądarce **http://127.0.0.1:8000/** — przekieruje na listę
+   i otwórz w przeglądarce **http://127.0.0.1:8731/** — przekieruje na listę
    scenariuszy. `--reload` sprawia, że zmiany w kodzie/szablonach są widoczne
    od razu, bez restartu.
 6. Żeby zobaczyć sam silnik "na żywo" (bez przeglądarki):
