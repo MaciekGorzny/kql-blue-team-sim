@@ -4,6 +4,13 @@ password-spray-style burst of failures followed by a suspicious success, and
 a separate AiTM-style token-replay sign-in from an unusual location - for
 scenarios to detect.
 
+Deliberate simplification: in the real table, `Location` is just a 2-letter
+country code, and city-level detail lives in a separate `LocationDetails`
+column (`dynamic`, not modeled here - this engine keeps rows flat). Here
+`Location` holds a "City, Country" string instead, since city-level color
+("Amsterdam, NL" vs. just "NL") makes scenario narratives much more concrete
+without changing the querying experience for the columns this app does model.
+
 Generation is fully deterministic (no `random` module involved), matching the
 convention in `device_process_events.py`/`device_logon_events.py`.
 """

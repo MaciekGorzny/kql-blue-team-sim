@@ -13,9 +13,9 @@ def test_generation_is_deterministic():
 
 
 def test_contains_kerberoasting_burst_for_six_distinct_services():
-    matches = [r for r in ile.ROWS if r["TargetAccountName"] != ""]
+    matches = [r for r in ile.ROWS if r["TargetAccountDisplayName"] != ""]
     assert len(matches) == 6
-    assert {r["TargetAccountName"] for r in matches} == {
+    assert {r["TargetAccountDisplayName"] for r in matches} == {
         "svc-sql",
         "svc-backup",
         "svc-web",

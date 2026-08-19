@@ -175,6 +175,14 @@ jednoelementowy zbiór, a `x in (nazwa)` odwołuje się do listy związanej prze
 - `identity_directory_events.py` - IdentityDirectoryEvents (Defender for
   Identity): zdarzenia w katalogu, w tym replikacja (pod kątem DCSync)
 
+Nazwy kolumn każdej tabeli są sprawdzone względem prawdziwego schematu
+advanced hunting (learn.microsoft.com) - to zawsze poprawny podzbiór
+rzeczywistych nazw, nigdy wymyślone/zmienione. Jeden świadomy wyjątek:
+`SigninLogs.Location` w prawdziwej tabeli to tylko 2-literowy kod kraju
+(szczegóły miasta siedzą w osobnej, zagnieżdżonej kolumnie `LocationDetails`,
+typu `dynamic`, którego ten silnik celowo nie obsługuje) - tutaj `Location`
+zawiera "Miasto, Kraj", bo to dużo lepiej służy narracji scenariuszy.
+
 Wszystkie tabele razem tworzą jedną wspólną, stale rosnącą "pulę logów"
 (`core/scenarios/log_store.py`), do której zapytania odwołują się niezależnie
 od tego, które ćwiczenie/scenariusz jest aktualnie otwarte - "Wolne

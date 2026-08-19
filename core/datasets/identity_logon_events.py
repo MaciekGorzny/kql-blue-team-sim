@@ -4,6 +4,10 @@ Active Directory, plus a deliberately injected Kerberoasting anomaly - a
 burst of Kerberos service-ticket (TGS) requests for many distinct service
 accounts from the same source account/device in a short window.
 
+Column names/types checked against the real advanced hunting schema
+(learn.microsoft.com/en-us/defender-xdr/advanced-hunting-identitylogonevents-table)
+- this is a strict subset of the real columns, using the real names as-is.
+
 Generation is fully deterministic (no `random` module involved), matching the
 convention in `device_process_events.py`/`device_logon_events.py`.
 """
@@ -24,7 +28,7 @@ SCHEMA = TableSchema(
         ColumnSchema("DeviceName", KqlType.STRING, "Urządzenie źródłowe (klient)."),
         ColumnSchema("TargetDeviceName", KqlType.STRING, "Serwer/zasób docelowy (np. kontroler domeny)."),
         ColumnSchema(
-            "TargetAccountName",
+            "TargetAccountDisplayName",
             KqlType.STRING,
             "Dla żądań biletu Kerberos (TGS) - konto usługi, którego bilet zażądano. Puste dla zwykłych logowań.",
         ),
@@ -49,7 +53,7 @@ _KERBEROASTING_BURST: list[dict[str, Any]] = [
         "AccountName": "hkrawczyk",
         "DeviceName": "WIN-CLIENT10",
         "TargetDeviceName": "DC01",
-        "TargetAccountName": target,
+        "TargetAccountDisplayName": target,
         "Protocol": "Kerberos",
         "ActionType": "LogonSuccess",
         "FailureReason": "",
@@ -74,7 +78,7 @@ def _benign_rows(count: int) -> list[dict[str, Any]]:
                 "AccountName": account,
                 "DeviceName": device,
                 "TargetDeviceName": "DC01",
-                "TargetAccountName": "",
+                "TargetAccountDisplayName": "",
                 "Protocol": protocol,
                 "ActionType": "LogonSuccess",
                 "FailureReason": "",
