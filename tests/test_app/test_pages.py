@@ -116,7 +116,7 @@ def test_incident_step_page_out_of_range_is_404(client):
 def test_scenario_page_lists_incidents_in_sidebar_data(client):
     response = client.get("/scenarios/001_find_lolbin_rundll32")
     incidents = _json_blob(response.text, "incidents-data")
-    assert len(incidents) == 9
+    assert len(incidents) == 10
     assert {i["id"] for i in incidents} == {
         "01_prinz_eugen_ransomware",
         "02_devicecode_phishing_and_containment",
@@ -127,6 +127,7 @@ def test_scenario_page_lists_incidents_in_sidebar_data(client):
         "07_ta569_driveby_blocked",
         "08_theatercraft_malvertising",
         "09_meta_2fa_relay_phishing",
+        "10_ad_kerberoasting_dcsync",
     }
 
 

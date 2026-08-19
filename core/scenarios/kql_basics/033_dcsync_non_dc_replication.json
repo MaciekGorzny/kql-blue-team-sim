@@ -1,0 +1,19 @@
+{
+  "id": "033_dcsync_non_dc_replication",
+  "title": "DCSync: replikacja katalogu z urządzenia, które nie jest kontrolerem domeny",
+  "prompt": "Uprawnienia do replikacji katalogu (Directory Services replication) powinny być używane wyłącznie przez prawdziwe kontrolery domeny - w tym środowisku jest to DC01. Żądanie replikacji z dowolnego innego urządzenia to jednoznaczny dowód ataku DCSync (kradzieży hashy haseł, w tym konta krbtgt). W IdentityDirectoryEvents znajdź zdarzenie 'Directory Services replication' pochodzące z urządzenia innego niż DC01. Zwróć Timestamp, AccountName, DeviceName i TargetAccountDisplayName.",
+  "datasets": [
+    "IdentityDirectoryEvents"
+  ],
+  "difficulty": "intermediate",
+  "mitre_techniques": [
+    "T1003.006"
+  ],
+  "hint": "`where ActionType == 'Directory Services replication' and DeviceName != 'DC01'`, potem `project`.",
+  "sc200_area": "Microsoft Defender for Identity (MDI)",
+  "validation": {
+    "result_match": {
+      "reference_query": "IdentityDirectoryEvents | where ActionType == 'Directory Services replication' and DeviceName != 'DC01' | project Timestamp, AccountName, DeviceName, TargetAccountDisplayName"
+    }
+  }
+}

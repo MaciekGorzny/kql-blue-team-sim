@@ -1,0 +1,19 @@
+{
+  "id": "031_kerberoasting_spn_recon",
+  "title": "Rozpoznanie kont usług przez LDAP (SPN enumeration)",
+  "prompt": "Zwykłe konto helpdesku wysłało do katalogu zapytanie LDAP wyliczające WSZYSTKIE konta z ustawionym Service Principal Name - to klasyczny krok rozpoznania przed atakiem Kerberoasting. W IdentityQueryEvents znajdź zapytanie, którego treść (Query) zawiera 'servicePrincipalName'. Zwróć Timestamp, AccountName, DeviceName i Query.",
+  "datasets": [
+    "IdentityQueryEvents"
+  ],
+  "difficulty": "beginner",
+  "mitre_techniques": [
+    "T1087.002"
+  ],
+  "hint": "`where Query contains 'servicePrincipalName'`, potem `project`.",
+  "sc200_area": "Microsoft Defender for Identity (MDI)",
+  "validation": {
+    "result_match": {
+      "reference_query": "IdentityQueryEvents | where Query contains 'servicePrincipalName' | project Timestamp, AccountName, DeviceName, Query"
+    }
+  }
+}

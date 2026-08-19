@@ -15,6 +15,9 @@ from . import (
     device_network_events,
     device_process_events,
     email_events,
+    identity_directory_events,
+    identity_logon_events,
+    identity_query_events,
     office_activity,
     signin_logs,
 )
@@ -28,6 +31,9 @@ _MODULES = [
     email_events,
     signin_logs,
     office_activity,
+    identity_logon_events,
+    identity_query_events,
+    identity_directory_events,
 ]
 
 DATASETS: dict[str, list[dict[str, Any]]] = {m.SCHEMA.name: m.ROWS for m in _MODULES}

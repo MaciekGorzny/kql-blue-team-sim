@@ -1,0 +1,25 @@
+{
+  "id": "032_kerberoasting_ticket_burst",
+  "title": "Kerberoasting: seria żądań biletów dla wielu kont usług",
+  "prompt": "Po rozpoznaniu SPN atakujący zaczął żądać biletów Kerberos (TGS) dla wielu różnych kont usług w krótkim czasie - to samo w sobie jest niepodejrzane (usługi robią to cały czas), ale jedno konto żądające biletów dla wielu RÓŻNYCH usług naraz już nie. W IdentityLogonEvents znajdź konto, które zażądało biletów Kerberos dla co najmniej 5 różnych kont usług (TargetAccountName). Pogrupuj po AccountName i DeviceName, policz unikalne TargetAccountName jako ServiceCount.",
+  "datasets": [
+    "IdentityLogonEvents"
+  ],
+  "difficulty": "advanced",
+  "mitre_techniques": [
+    "T1558.003"
+  ],
+  "hint": "`where Protocol == 'Kerberos' and TargetAccountName != ''`, potem `summarize ServiceCount = dcount(TargetAccountName) by AccountName, DeviceName | where ServiceCount >= 5`.",
+  "sc200_area": "Microsoft Defender for Identity (MDI)",
+  "validation": {
+    "result_match": {
+      "reference_query": "IdentityLogonEvents | where Protocol == 'Kerberos' and TargetAccountName != '' | summarize ServiceCount = dcount(TargetAccountName) by AccountName, DeviceName | where ServiceCount >= 5",
+      "ordered": false
+    },
+    "required_usage": {
+      "required_operators": [
+        "SummarizeStage"
+      ]
+    }
+  }
+}

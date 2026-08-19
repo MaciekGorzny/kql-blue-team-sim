@@ -34,9 +34,9 @@ def _write(tmp_path: Path, **overrides) -> Path:
     return path
 
 
-def test_load_all_scenarios_finds_thirty_scenarios():
+def test_load_all_scenarios_finds_thirty_three_scenarios():
     scenarios = load_all_scenarios()
-    assert len(scenarios) == 30
+    assert len(scenarios) == 33
 
 
 def test_source_url_is_parsed_when_present(tmp_path: Path):

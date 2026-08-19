@@ -142,7 +142,7 @@ def test_get_scenario_detail_includes_sc200_area(client):
 def test_get_scenario_detail_first_and_last_have_no_neighbor(client):
     first = client.get("/api/scenarios/001_find_lolbin_rundll32").json()
     assert first["prev_id"] is None
-    last = client.get("/api/scenarios/030_meta_phishing_signin_anomaly").json()
+    last = client.get("/api/scenarios/033_dcsync_non_dc_replication").json()
     assert last["next_id"] is None
 
 
@@ -312,6 +312,9 @@ def test_list_tables_includes_every_built_in_table_with_rows(client):
         "EmailEvents",
         "DeviceFileEvents",
         "OfficeActivity",
+        "IdentityLogonEvents",
+        "IdentityQueryEvents",
+        "IdentityDirectoryEvents",
     ):
         assert tables[name] > 0
 
@@ -475,7 +478,7 @@ def test_get_incident_step_detail_unknown_incident_is_404(client):
 def test_list_incidents_includes_all_incidents(client):
     response = client.get("/api/incidents")
     data = response.json()
-    assert len(data) == 9
+    assert len(data) == 10
     ids = {i["id"] for i in data}
     assert ids == {
         "01_prinz_eugen_ransomware",
@@ -487,6 +490,7 @@ def test_list_incidents_includes_all_incidents(client):
         "07_ta569_driveby_blocked",
         "08_theatercraft_malvertising",
         "09_meta_2fa_relay_phishing",
+        "10_ad_kerberoasting_dcsync",
     }
 
 
@@ -618,3 +622,17 @@ def test_ninth_incident_investigation_steps_still_grade_correctly(client):
 
     kinds = [s["kind"] for s in client.get("/api/incidents/09_meta_2fa_relay_phishing").json()["steps"]]
     assert kinds == ["investigation", "investigation", "action", "action"]
+
+
+def test_tenth_incident_investigation_steps_still_grade_correctly(client):
+    for step_number, scenario_id in [
+        (1, "031_kerberoasting_spn_recon"),
+        (2, "032_kerberoasting_ticket_burst"),
+        (4, "033_dcsync_non_dc_replication"),
+    ]:
+        step = client.get(f"/api/incidents/10_ad_kerberoasting_dcsync/steps/{step_number}").json()
+        assert step["id"] == scenario_id
+        _assert_grades_correct(client, scenario_id)
+
+    kinds = [s["kind"] for s in client.get("/api/incidents/10_ad_kerberoasting_dcsync").json()["steps"]]
+    assert kinds == ["investigation", "investigation", "action", "investigation", "action"]

@@ -22,6 +22,13 @@ def test_get_tables_includes_all_new_sentinel_style_tables():
     assert all(len(rows) > 0 for rows in tables.values())
 
 
+def test_get_tables_includes_all_identity_mdi_tables():
+    names = ["IdentityLogonEvents", "IdentityQueryEvents", "IdentityDirectoryEvents"]
+    tables = get_tables(*names)
+    assert set(tables.keys()) == set(names)
+    assert all(len(rows) > 0 for rows in tables.values())
+
+
 def test_get_tables_unknown_dataset_raises_helpful_error():
     with pytest.raises(KeyError) as exc_info:
         get_tables("NoSuchTable")

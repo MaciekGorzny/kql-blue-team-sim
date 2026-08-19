@@ -8,9 +8,9 @@ from core.incidents import load_all_incidents
 from core.incidents.loader import IncidentLoadError, load_incident_file
 
 
-def test_load_all_incidents_finds_nine_incidents():
+def test_load_all_incidents_finds_ten_incidents():
     incidents = load_all_incidents()
-    assert len(incidents) == 9
+    assert len(incidents) == 10
 
 
 def test_incidents_are_sorted_by_filename():
@@ -26,6 +26,7 @@ def test_incidents_are_sorted_by_filename():
         "07_ta569_driveby_blocked",
         "08_theatercraft_malvertising",
         "09_meta_2fa_relay_phishing",
+        "10_ad_kerberoasting_dcsync",
     ]
 
 

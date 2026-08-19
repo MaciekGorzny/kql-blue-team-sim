@@ -1,0 +1,39 @@
+{
+  "id": "10_ad_kerberoasting_dcsync",
+  "title": "Atak na Active Directory: rozpoznanie → Kerberoasting → DCSync",
+  "summary": "Klasyczna progresja ataku na środowisko on-premowego Active Directory, widziana przez pryzmat telemetrii Microsoft Defender for Identity: najpierw rozpoznanie kont usług przez LDAP, potem masowe żądanie biletów Kerberos (Kerberoasting), a na końcu kradzież hashy haseł całej domeny przez DCSync. W przeciwieństwie do wcześniejszych scenariuszy to nie phishing - to atak prowadzony już wewnątrz sieci, na samą usługę katalogową.",
+  "steps": [
+    {
+      "scenario_id": "031_kerberoasting_spn_recon",
+      "narrative": "Zaczynasz od najwcześniejszego, najcichszego sygnału: zwykłe zapytanie do katalogu, które w rzeczywistości jest rozpoznaniem przed atakiem. Znajdź je."
+    },
+    {
+      "scenario_id": "032_kerberoasting_ticket_burst",
+      "narrative": "Rozpoznanie się powiodło - atakujący wie już, które konta usług istnieją. Sprawdź, czy zaczął żądać dla nich biletów Kerberos w podejrzanym tempie."
+    },
+    {
+      "kind": "action",
+      "title": "Powstrzymanie: zanim hashe zostaną złamane",
+      "narrative": "Bilety Kerberos są łamane offline, więc masz trochę czasu - ale nie dużo. Skradzione bilety kont usług to potencjalny dostęp do baz danych, backupów i poczty.",
+      "actions": [
+        "Zablokuj konto atakującego i odizoluj urządzenie źródłowe od sieci.",
+        "Wymuś rotację haseł na wszystkich kontach usług (svc-*), których bilety zostały zażądane - ich hashe trzeba uznać za potencjalnie złamane.",
+        "Rozważ włączenie/wymuszenie silniejszego szyfrowania Kerberos (AES zamiast RC4) tam, gdzie to możliwe - RC4 jest dużo łatwiejszy do złamania offline."
+      ]
+    },
+    {
+      "scenario_id": "033_dcsync_non_dc_replication",
+      "narrative": "Zanim zdążyłeś w pełni powstrzymać atak, atakujący poszedł o krok dalej - sprawdź, czy próbował już wykraść hashe całej domeny przez replikację katalogu."
+    },
+    {
+      "kind": "action",
+      "title": "Pełne powstrzymanie: kompromitacja całej domeny",
+      "narrative": "DCSync oznacza, że atakujący mógł zdobyć hash konta krbtgt - to nie jest już incydent na jednym koncie, to kompromitacja całej domeny. Standardowe działania (reset jednego hasła) nie wystarczą.",
+      "actions": [
+        "Zresetuj hasło konta krbtgt DWUKROTNIE (z odstępem, zgodnie z wytycznymi Microsoft) - to unieważnia wszystkie istniejące Golden Tickety.",
+        "Zresetuj hasła wszystkich kont z uprawnieniami do replikacji katalogu (Domain Admins i podobne) oraz przejrzyj, kto faktycznie potrzebuje tych uprawnień.",
+        "Zaplanuj pełny przegląd domeny pod kątem innych śladów trwałego dostępu (nieautoryzowane konta, zmienione uprawnienia delegacji, nowe obiekty GPO) - kompromitacja krbtgt wymaga założenia, że atakujący mógł zrobić dużo więcej, niż widać w logach."
+      ]
+    }
+  ]
+}
